@@ -6,7 +6,7 @@ export default function TheShiftPage() {
       {/* THE SHIFT Titel oben */}
       <div className="pt-8 px-4">
         <h1 
-          className="text-white text-center"
+          className="text-white text-center animate-uneven-pulse"
           style={{
             fontFamily: 'var(--font-macbeth)',
             fontSize: 'clamp(2rem, 8vw, 4rem)',

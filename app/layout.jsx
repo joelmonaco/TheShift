@@ -55,7 +55,6 @@ export const metadata = {
     apple: [
       { url: "/icon.webp", sizes: "180x180", type: "image/webp" },
     ],
-    shortcut: "/icon.webp",
   },
   openGraph: {
     type: "website",
