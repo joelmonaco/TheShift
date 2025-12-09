@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import FuzzyText from '@/components/FuzzyText'
 
 export default function HomePage() {
+  const router = useRouter()
   const [code, setCode] = useState(['', '', '', ''])
+  const [hasError, setHasError] = useState(false)
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)]
 
   // Prüfe ob alle 4 Ziffern eingegeben sind
@@ -60,8 +63,17 @@ export default function HomePage() {
   const handleEnter = () => {
     if (isComplete) {
       const fullCode = code.join('')
-      console.log('Code eingegeben:', fullCode)
-      // Hier kannst du die Navigation oder Validierung hinzufügen
+      // Wenn der Code 4730 ist, navigiere zu /theshift4730
+      if (fullCode === '4730') {
+        router.push('/theshift4730')
+      } else {
+        // Falscher Code - Fehler anzeigen
+        setHasError(true)
+        // Nach 1 Sekunde Fehler zurücksetzen
+        setTimeout(() => {
+          setHasError(false)
+        }, 1000)
+      }
     }
   }
 
@@ -87,7 +99,7 @@ export default function HomePage() {
         </div>
 
         {/* Code-Eingabefelder */}
-        <div className="flex gap-3 justify-center mb-8">
+        <div className={`flex gap-3 justify-center mb-8 ${hasError ? 'animate-shake' : ''}`}>
           {code.map((digit, index) => (
             <Input
               key={index}
@@ -99,7 +111,11 @@ export default function HomePage() {
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste}
-              className="w-16 h-16 text-center text-2xl font-semibold bg-gray-900 border-2 border-gray-700 text-white focus:border-white focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 transition-colors rounded-xl"
+              className={`w-16 h-16 text-center text-2xl font-semibold bg-gray-900 border-2 text-white focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 transition-colors rounded-xl ${
+                hasError 
+                  ? 'border-red-500 focus:border-red-500' 
+                  : 'border-gray-700 focus:border-white'
+              }`}
             />
           ))}
         </div>
@@ -110,8 +126,11 @@ export default function HomePage() {
             <Button
               onClick={handleEnter}
               className="px-8 py-3 text-base font-medium bg-white text-black hover:bg-gray-100 transition-all duration-200 rounded-xl animate-fade-in"
+              style={{
+                boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), 0 0 60px rgba(255, 255, 255, 0.15)',
+              }}
             >
-              Enter{' '}<strong>The Shift</strong> -&gt;
+              Enter <strong>The Shift</strong> -&gt;
             </Button>
           )}
         </div>

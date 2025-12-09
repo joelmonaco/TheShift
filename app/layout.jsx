@@ -1,8 +1,16 @@
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+
+// Benutzerdefinierte Schriftart OPTIMacBethOldStyle
+const macbethFont = localFont({
+  src: "./fonts/OPTIMacBethOldStyle Regular.ttf",
+  variable: "--font-macbeth",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,8 +25,8 @@ export const metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://theshift.ai"
   ),
   title: {
-    default: "TheShift - Deine AI Avatar Plattform",
-    template: "%s | TheShift",
+    default: "Factory Production's The Shift",
+    template: "%s | Factory Production's The Shift",
   },
   description:
     "Erstelle deinen eigenen AI Avatar und interagiere mit anderen Avataren. Die Zukunft der digitalen Identität.",
@@ -106,7 +114,7 @@ export default async function RootLayout({ children }) {
         <meta name="google" content="notranslate" />
       </head>
       <body
-        className={`${inter.className} min-h-screen w-full antialiased overflow-x-hidden`}
+        className={`${inter.className} ${macbethFont.variable} min-h-screen w-full antialiased overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
         <div
