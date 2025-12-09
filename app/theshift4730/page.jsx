@@ -6,11 +6,16 @@ export default function TheShiftPage() {
   const videoRef = useRef(null)
   const containerRef = useRef(null)
   const introVideoRef = useRef(null)
+  const video2Ref = useRef(null)
+  const container2Ref = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
+  const [shouldFlicker2, setShouldFlicker2] = useState(true)
+  const [isLastHalfSecond2, setIsLastHalfSecond2] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const heroTextRef = useRef(null)
   const loglineTextRef = useRef(null)
+  const synopsisTextRef = useRef(null)
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [isFading, setIsFading] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -91,6 +96,63 @@ export default function TheShiftPage() {
           console.error('Autoplay-Fehler:', err)
         })
       })
+      
+      video.addEventListener('timeupdate', handleTimeUpdate)
+      
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate)
+      }
+    }
+  }, [])
+
+  // Video 2 Flackern-Effekt (wie Video 1)
+  useEffect(() => {
+    const video = video2Ref.current
+    if (video) {
+      let lastTime = 0
+      let isNearEnd = false
+      
+      const triggerFlicker = () => {
+        if (container2Ref.current) {
+          setShouldFlicker2(true)
+          // Nach 2 Sekunden (Animation-Dauer) wieder zurücksetzen
+          setTimeout(() => {
+            setShouldFlicker2(false)
+          }, 2000)
+        }
+      }
+      
+      // Event Listener für Video-Loop
+      const handleTimeUpdate = () => {
+        const currentTime = video.currentTime
+        const duration = video.duration
+        
+        if (duration > 0) {
+          const timeUntilEnd = duration - currentTime
+          
+          // Prüfe ob Video in der letzten halben Sekunde ist - dann komplett schwarz
+          if (timeUntilEnd <= 0.5 && timeUntilEnd > 0) {
+            setIsLastHalfSecond2(true)
+          } else {
+            setIsLastHalfSecond2(false)
+          }
+          
+          // Prüfe ob Video in der letzten Sekunde ist - dann flackern (aber nicht in der letzten halben Sekunde)
+          if (timeUntilEnd <= 1 && timeUntilEnd > 0.5 && !isNearEnd) {
+            isNearEnd = true
+            triggerFlicker()
+          }
+          
+          // Wenn Video zurückgesprungen ist (Loop hat neu gestartet)
+          if (isNearEnd && currentTime < 0.5 && lastTime > duration * 0.9) {
+            isNearEnd = false
+            setIsLastHalfSecond2(false)
+            triggerFlicker()
+          }
+        }
+        
+        lastTime = currentTime
+      }
       
       video.addEventListener('timeupdate', handleTimeUpdate)
       
@@ -426,6 +488,81 @@ export default function TheShiftPage() {
                 </span>
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dritter Abschnitt - Synopsis */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Video Hintergrund */}
+        <div 
+          ref={container2Ref}
+          className={`absolute top-0 left-0 w-full h-full z-0 ${shouldFlicker2 ? 'animate-flicker-start' : ''}`}
+        >
+          <video
+            ref={video2Ref}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+            style={{
+              opacity: isLastHalfSecond2 ? 0 : 1,
+              transition: 'opacity 0.1s ease-out',
+            }}
+          >
+            <source src="/Video_2.mov" type="video/quicktime" />
+            <source src="/Video_2.mov" type="video/mp4" />
+            Dein Browser unterstützt das Video-Tag nicht.
+          </video>
+        </div>
+
+        {/* Gradient Verlauf zu schwarz oben */}
+        <div 
+          className="absolute top-0 left-0 w-full h-32 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        {/* Content */}
+        <div className="relative z-20 min-h-screen flex items-center justify-center px-4" style={{ paddingTop: '65vh', paddingBottom: '35vh' }}>
+          <div 
+            ref={synopsisTextRef}
+            className="max-w-4xl mx-auto text-center"
+            style={{
+              transform: `translateY(${scrollY * 0.1}px)`,
+              transition: 'transform 0.1s ease-out',
+            }}
+          >
+            {/* Überschrift SYNOPSIS */}
+            <h2 
+              className="text-white mb-4 animate-uneven-pulse"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(2rem, 6vw, 4rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              SYNOPSIS
+            </h2>
+
+            {/* Text */}
+            <p 
+              className="text-white text-lg md:text-xl leading-relaxed mb-8"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 600,
+                letterSpacing: '0.01em',
+                lineHeight: '1.8',
+              }}
+            >
+              Hannah (28) and Emilia (21) are sisters bound by a deep, lifelong connection—yet they couldn&apos;t be more different. Hannah, the confident and charismatic rising film producer on the brink of her big breakthrough, has always pulled her quiet, introverted sister Emilia along in her wake. But when Hannah receives a devastating cancer diagnosis, a trauma she once endured as a child resurfaces, shattering the stability she worked so hard to build.
+              <br /><br />
+              As overwhelming fear, buried memories, and old wounds resurface, Hannah is suddenly dragged into The Shift: a dark parallel universe where every suppressed terror takes physical form. Though she manages to escape once, the second time she is pulled in, she never returns. In the real world, her body is found—her death ruled a suicide. But Emilia refuses to believe it. Grieving the loss of the sister, Emilia begins searching for answers—and is soon swallowed by The Shift herself.
+            </p>
           </div>
         </div>
       </section>
