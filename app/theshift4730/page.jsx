@@ -5,11 +5,17 @@ import { useEffect, useRef, useState } from 'react'
 export default function TheShiftPage() {
   const videoRef = useRef(null)
   const containerRef = useRef(null)
+  const introVideoRef = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const heroTextRef = useRef(null)
   const loglineTextRef = useRef(null)
+  const [showVideoModal, setShowVideoModal] = useState(false)
+  const [isFading, setIsFading] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [showControls, setShowControls] = useState(true)
+  const controlsTimeoutRef = useRef(null)
 
   useEffect(() => {
     const video = videoRef.current
@@ -104,6 +110,91 @@ export default function TheShiftPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handler für Play First Minutes Button
+  const handlePlayFirstMinutes = () => {
+    setIsFading(true)
+    // Langsam zu schwarz faden, dann Video
+    setTimeout(() => {
+      setIsFading(false)
+      setShowVideoModal(true)
+      setShowControls(true) // Controls initial anzeigen
+      // Scroll zur Logline-Sektion
+      const loglineSection = document.querySelector('section')
+      if (loglineSection) {
+        loglineSection.scrollIntoView({ behavior: 'smooth' })
+      }
+      // Video nach kurzer Verzögerung starten
+      setTimeout(() => {
+        if (introVideoRef.current) {
+          introVideoRef.current.volume = 1.0 // Volle Lautstärke
+          introVideoRef.current.muted = false // Sound aktivieren
+          introVideoRef.current.play().catch(err => {
+            console.error('Video play error:', err)
+          })
+          setIsPlaying(true)
+        }
+        // Nach 3 Sekunden Controls ausblenden
+        controlsTimeoutRef.current = setTimeout(() => {
+          setShowControls(false)
+        }, 3000)
+      }, 300)
+    }, 1500) // Fade-to-Black Dauer
+  }
+
+  // Handler für Video schließen
+  const handleCloseVideo = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (introVideoRef.current) {
+      introVideoRef.current.pause()
+      introVideoRef.current.currentTime = 0
+      introVideoRef.current.muted = true
+    }
+    setIsPlaying(false)
+    setShowVideoModal(false)
+    setShowControls(false)
+    // Zurück zur Logline-Sektion scrollen
+    setTimeout(() => {
+      const loglineSection = document.querySelector('section')
+      if (loglineSection) {
+        loglineSection.scrollIntoView({ behavior: 'smooth' })
+      }
+    }, 100)
+  }
+
+  // Handler für Play/Pause Toggle
+  const handlePlayPause = () => {
+    if (introVideoRef.current) {
+      if (isPlaying) {
+        introVideoRef.current.pause()
+        setIsPlaying(false)
+      } else {
+        introVideoRef.current.play()
+        setIsPlaying(true)
+      }
+    }
+  }
+
+  // Video Event Handler
+  useEffect(() => {
+    const video = introVideoRef.current
+    if (video) {
+      const handlePlay = () => setIsPlaying(true)
+      const handlePause = () => setIsPlaying(false)
+      const handleEnded = () => setIsPlaying(false)
+
+      video.addEventListener('play', handlePlay)
+      video.addEventListener('pause', handlePause)
+      video.addEventListener('ended', handleEnded)
+
+      return () => {
+        video.removeEventListener('play', handlePlay)
+        video.removeEventListener('pause', handlePause)
+        video.removeEventListener('ended', handleEnded)
+      }
+    }
+  }, [showVideoModal])
+
   return (
     <div className="bg-black">
       {/* Hero Section */}
@@ -197,6 +288,39 @@ export default function TheShiftPage() {
         </p>
       </div>
 
+      {/* Explore mit Pfeil - Ganz unten in Hero Section */}
+      <div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer group hover:opacity-80 transition-opacity" 
+        onClick={() => {
+          // Finde die zweite Section (Logline-Sektion)
+          const sections = document.querySelectorAll('section')
+          if (sections.length > 1) {
+            sections[1].scrollIntoView({ behavior: 'smooth' })
+          }
+        }}
+      >
+        <p 
+          className="text-white text-sm"
+          style={{
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontWeight: 400,
+          }}
+        >
+          Explore
+        </p>
+        <svg 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2"
+          className="text-white animate-bounce-arrow"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+
       {/* Watch Teaser Badge - Fixed unten rechts */}
       <div 
         className="fixed bottom-8 right-8 z-50"
@@ -246,7 +370,7 @@ export default function TheShiftPage() {
           >
             {/* Überschrift LOGLINE */}
             <h2 
-              className="text-white mb-4"
+              className="text-white mb-4 animate-uneven-pulse"
               style={{
                 fontFamily: 'var(--font-macbeth)',
                 fontSize: 'clamp(2rem, 6vw, 4rem)',
@@ -262,7 +386,7 @@ export default function TheShiftPage() {
               className="text-white text-lg md:text-xl leading-relaxed mb-8"
               style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
-                fontWeight: 400,
+                fontWeight: 600,
                 letterSpacing: '0.01em',
                 lineHeight: '1.8',
               }}
@@ -273,6 +397,7 @@ export default function TheShiftPage() {
             {/* Play Button */}
             <div className="flex justify-center mt-8">
               <button
+                onClick={handlePlayFirstMinutes}
                 className="px-8 py-3 text-base font-medium bg-white text-black hover:bg-gray-100 transition-all duration-200 rounded-xl flex items-center gap-3"
                 style={{
                   boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), 0 0 60px rgba(255, 255, 255, 0.15)',
@@ -296,6 +421,117 @@ export default function TheShiftPage() {
           </div>
         </div>
       </section>
+
+      {/* Fade-to-Black Overlay */}
+      {isFading && (
+        <div 
+          className="fixed inset-0 z-[100] pointer-events-none"
+          style={{
+            background: 'black',
+            animation: 'fadeToBlack 1.5s ease-in forwards',
+          }}
+        />
+      )}
+
+      {/* Video Modal Fullscreen */}
+      {showVideoModal && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          onMouseMove={() => {
+            // Bei Mausbewegung Controls zeigen und Timer zurücksetzen
+            setShowControls(true)
+            if (controlsTimeoutRef.current) {
+              clearTimeout(controlsTimeoutRef.current)
+            }
+            // Nach 3 Sekunden Inaktivität ausblenden
+            controlsTimeoutRef.current = setTimeout(() => {
+              setShowControls(false)
+            }, 3000)
+          }}
+          onMouseLeave={() => {
+            // Beim Verlassen sofort ausblenden
+            setShowControls(false)
+            if (controlsTimeoutRef.current) {
+              clearTimeout(controlsTimeoutRef.current)
+            }
+          }}
+        >
+          {/* Close Button - Rechts oben (immer sichtbar) */}
+          <button
+            onClick={handleCloseVideo}
+            onMouseDown={(e) => e.stopPropagation()}
+            className="absolute top-8 right-8 z-[102] text-white hover:text-gray-300 transition-all duration-200 cursor-pointer opacity-100"
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'auto',
+            }}
+          >
+            <svg 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
+          {/* Video */}
+          <video
+            ref={introVideoRef}
+            className="w-full h-full object-contain"
+            controls={false}
+            playsInline
+            volume={1.0}
+          >
+            <source src="/Intro.mp4" type="video/mp4" />
+            Dein Browser unterstützt das Video-Tag nicht.
+          </video>
+
+          {/* Play/Pause Button - Mitte (nur bei Mausbewegung sichtbar) */}
+          <div
+            className="absolute inset-0 z-[101] flex items-center justify-center pointer-events-none"
+          >
+            <button
+              onClick={handlePlayPause}
+              className={`text-white hover:text-gray-300 transition-all duration-200 hover:scale-110 ${
+                showControls ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                width: '80px',
+                height: '80px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: '50%',
+                backdropFilter: 'blur(10px)',
+                pointerEvents: showControls ? 'auto' : 'none',
+              }}
+            >
+            {isPlaying ? (
+              // Pause Icon
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            ) : (
+              // Play Icon
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

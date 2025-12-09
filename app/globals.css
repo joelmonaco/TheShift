@@ -1000,6 +1000,30 @@
   animation: uneven-pulse 12s ease-in-out infinite;
 }
 
+/* Fade-to-Black Animation */
+@keyframes fadeToBlack {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Bounce Arrow Animation */
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-bounce-arrow {
+  animation: bounce-arrow 2s ease-in-out infinite;
+}
+
 /* Flacker-Animation für Video-Start */
 @keyframes flicker-start {
   0% {
