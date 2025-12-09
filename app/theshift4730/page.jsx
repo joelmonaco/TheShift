@@ -235,7 +235,7 @@ export default function TheShiftPage() {
         <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
 
         {/* Content */}
-        <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-24">
+        <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-24" style={{ paddingTop: '25vh' }}>
           <div 
             ref={loglineTextRef}
             className="max-w-4xl mx-auto text-center"
@@ -259,7 +259,7 @@ export default function TheShiftPage() {
 
             {/* Text */}
             <p 
-              className="text-white text-lg md:text-xl leading-relaxed"
+              className="text-white text-lg md:text-xl leading-relaxed mb-8"
               style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 fontWeight: 400,
@@ -269,6 +269,30 @@ export default function TheShiftPage() {
             >
               A shattering medical diagnosis swallows the older sister Hannah into The Shift, a sinister parallel universe shaped by her most haunting fears. Driven by love and grief, her younger sister Emilia steps into the same darkness, seeking the truth on a journey that threatens to consume her as well.
             </p>
+
+            {/* Play Button */}
+            <div className="flex justify-center mt-8">
+              <button
+                className="px-8 py-3 text-base font-medium bg-white text-black hover:bg-gray-100 transition-all duration-200 rounded-xl flex items-center gap-3"
+                style={{
+                  boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), 0 0 60px rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                {/* Play Icon */}
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                  className="flex-shrink-0"
+                >
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span style={{ fontFamily: 'var(--font-macbeth)' }}>
+                  Play First Minutes
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
