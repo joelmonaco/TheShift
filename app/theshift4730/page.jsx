@@ -8,10 +8,14 @@ export default function TheShiftPage() {
   const introVideoRef = useRef(null)
   const video2Ref = useRef(null)
   const container2Ref = useRef(null)
+  const video3Ref = useRef(null)
+  const video4Ref = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
   const [shouldFlicker2, setShouldFlicker2] = useState(true)
   const [isLastHalfSecond2, setIsLastHalfSecond2] = useState(false)
+  const [isHoveringHannah, setIsHoveringHannah] = useState(false)
+  const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const heroTextRef = useRef(null)
   const loglineTextRef = useRef(null)
@@ -572,6 +576,159 @@ export default function TheShiftPage() {
               <br /><br />
               As overwhelming fear, buried memories, and old wounds resurface, Hannah is suddenly dragged into The Shift: a dark parallel universe where every suppressed terror takes physical form. Though she manages to escape once, the second time she is pulled in, she never returns. In the real world, her body is found—her death ruled a suicide. But Emilia refuses to believe it. Grieving the loss of the sister, Emilia begins searching for answers—and is soon swallowed by The Shift herself.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Vierter Abschnitt - Characters */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        <div className="flex h-screen">
+          {/* Linke Seite - Hannah */}
+          <div 
+            className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
+            onMouseEnter={() => {
+              setIsHoveringHannah(true)
+              if (video3Ref.current) {
+                video3Ref.current.play().catch(err => console.error('Video play error:', err))
+              }
+            }}
+            onMouseLeave={() => {
+              setIsHoveringHannah(false)
+              if (video3Ref.current) {
+                video3Ref.current.pause()
+              }
+            }}
+          >
+            {/* Video Hintergrund */}
+            <video
+              ref={video3Ref}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute top-0 left-0 w-full h-full object-cover"
+            >
+              <source src="/Video_3.mov" type="video/quicktime" />
+              <source src="/Video_3.mov" type="video/mp4" />
+              Dein Browser unterstützt das Video-Tag nicht.
+            </video>
+
+            {/* Dunkler Overlay */}
+            <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-10"></div>
+
+            {/* Content */}
+            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
+              <h2 
+                className="text-white mb-8 animate-uneven-pulse"
+                style={{
+                  fontFamily: 'var(--font-macbeth)',
+                  fontSize: 'clamp(2rem, 5vw, 4rem)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                HANNAH KESSLER
+              </h2>
+              
+              {/* Text - erscheint beim Hover */}
+              <div 
+                className={`max-w-2xl mx-auto transition-all duration-500 ${
+                  isHoveringHannah ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{
+                  pointerEvents: isHoveringHannah ? 'auto' : 'none',
+                }}
+              >
+                <p 
+                  className="text-white text-base md:text-lg leading-relaxed"
+                  style={{
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 400,
+                    lineHeight: '1.8',
+                  }}
+                >
+                  Hannah, 28, is charismatic, magnetic, and effortlessly confident—the kind of woman who commands any room. With her blonde hair, sharp style, and warm, open energy, she&apos;s a rising film producer on the verge of major success. Behind her polished exterior, however, lies a vulnerability shaped by a serious childhood illness she&apos;s long tried to bury.
+                  <br /><br />
+                  She projects strength, yet quietly carries fears she never reveals—especially to her younger sister, Emilia, whom she has always fiercely protected. Hannah&apos;s defining tension lies in this contrast: a woman who appears unstoppable, but privately battles the shadows of her past.
+                  <br /><br />
+                  Played by Eli Riccardi, known from Maxton Hall, Mandy und die Mächte des Bösen, and more.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Rechte Seite - Emilia */}
+          <div 
+            className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
+            onMouseEnter={() => {
+              setIsHoveringEmilia(true)
+              if (video4Ref.current) {
+                video4Ref.current.play().catch(err => console.error('Video play error:', err))
+              }
+            }}
+            onMouseLeave={() => {
+              setIsHoveringEmilia(false)
+              if (video4Ref.current) {
+                video4Ref.current.pause()
+              }
+            }}
+          >
+            {/* Video Hintergrund */}
+            <video
+              ref={video4Ref}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute top-0 left-0 w-full h-full object-cover"
+            >
+              <source src="/Video_4.mov" type="video/quicktime" />
+              <source src="/Video_4.mov" type="video/mp4" />
+              Dein Browser unterstützt das Video-Tag nicht.
+            </video>
+
+            {/* Dunkler Overlay */}
+            <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-10"></div>
+
+            {/* Content */}
+            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
+              <h2 
+                className="text-white mb-8 animate-uneven-pulse"
+                style={{
+                  fontFamily: 'var(--font-macbeth)',
+                  fontSize: 'clamp(2rem, 5vw, 4rem)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                EMILIA KESSLER
+              </h2>
+              
+              {/* Text - erscheint beim Hover */}
+              <div 
+                className={`max-w-2xl mx-auto transition-all duration-500 ${
+                  isHoveringEmilia ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{
+                  pointerEvents: isHoveringEmilia ? 'auto' : 'none',
+                }}
+              >
+                <p 
+                  className="text-white text-base md:text-lg leading-relaxed"
+                  style={{
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 400,
+                    lineHeight: '1.8',
+                  }}
+                >
+                  Emilia, 21, is quiet, quirky, and deeply introverted—a true wallflower. With her soft brown hair and gentle eyes, she carries a natural shyness that makes her blend into the background. She still lives in her small hometown, recently starting medical school more out of safety than ambition.
+                  <br /><br />
+                  Overshadowed her whole life by her confident older sister, Hannah, Emilia relied on her as both protector and anchor. That dependence left Emilia sheltered, with few friends, a strained relationship with her mother, and little sense of her own identity. Defined by her sensitivity and hesitation, Emilia is someone who has never learned to stand on her own—now forced to confront a world, and fears, she&apos;s long avoided.
+                  <br /><br />
+                  Played by Lina Hüesker, known from Hilfe, ich hab meine Lehrerin geschrumpft, Vaterfreuden and more.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
