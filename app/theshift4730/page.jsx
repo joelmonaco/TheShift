@@ -7,6 +7,9 @@ export default function TheShiftPage() {
   const containerRef = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+  const heroTextRef = useRef(null)
+  const loglineTextRef = useRef(null)
 
   useEffect(() => {
     const video = videoRef.current
@@ -91,9 +94,21 @@ export default function TheShiftPage() {
     }
   }, [])
 
+  // Parallax-Effekt für Scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Video Container mit Gradients */}
+    <div className="bg-black">
+      {/* Hero Section */}
+      <div className="min-h-screen bg-black relative overflow-hidden">
+        {/* Video Container mit Gradients */}
       <div 
         ref={containerRef}
         className={`absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 z-0 ${shouldFlicker ? 'animate-flicker-start' : ''}`}
@@ -148,19 +163,115 @@ export default function TheShiftPage() {
       </div>
 
       {/* THE SHIFT Titel */}
-      <div className="relative z-20 pt-24 px-4">
+      <div 
+        ref={heroTextRef}
+        className="relative z-20 pt-24 px-4"
+        style={{
+          transform: `translateY(${scrollY * 0.3}px)`,
+          transition: 'transform 0.1s ease-out',
+        }}
+      >
         <h1 
           className="text-white text-center animate-uneven-pulse"
           style={{
             fontFamily: 'var(--font-macbeth)',
             fontSize: 'clamp(4rem, 15vw, 8rem)',
             fontWeight: 400,
-            letterSpacing: '0.05em',
+            letterSpacing: '-0.02em',
           }}
         >
           THE SHIFT
         </h1>
+        <p 
+          className="text-white text-center"
+          style={{
+            fontFamily: 'var(--font-macbeth)',
+            fontSize: 'clamp(0.75rem, 2vw, 1rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
+            opacity: 0.8,
+            marginTop: '0.25rem',
+          }}
+        >
+          A LIMITED SERIES
+        </p>
       </div>
+
+      {/* Watch Teaser Badge - Fixed unten rechts */}
+      <div 
+        className="fixed bottom-8 right-8 z-50"
+      >
+        <div 
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors"
+          style={{
+            fontFamily: 'var(--font-macbeth)',
+            fontSize: '0.875rem',
+            fontWeight: 400,
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+          }}
+        >
+          Watch teaser
+        </div>
+      </div>
+      </div>
+
+      {/* Zweiter Abschnitt - Logline (weit unten) */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Video Hintergrund */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="/Intro.mp4" type="video/mp4" />
+          Dein Browser unterstützt das Video-Tag nicht.
+        </video>
+
+        {/* Dunkler transparenter Layer */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
+
+        {/* Content */}
+        <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-24">
+          <div 
+            ref={loglineTextRef}
+            className="max-w-4xl mx-auto text-center"
+            style={{
+              transform: `translateY(${scrollY * -0.2}px)`,
+              transition: 'transform 0.1s ease-out',
+            }}
+          >
+            {/* Überschrift LOGLINE */}
+            <h2 
+              className="text-white mb-4"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(2rem, 6vw, 4rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              LOGLINE
+            </h2>
+
+            {/* Text */}
+            <p 
+              className="text-white text-lg md:text-xl leading-relaxed"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 400,
+                letterSpacing: '0.01em',
+                lineHeight: '1.8',
+              }}
+            >
+              A shattering medical diagnosis swallows the older sister Hannah into The Shift, a sinister parallel universe shaped by her most haunting fears. Driven by love and grief, her younger sister Emilia steps into the same darkness, seeking the truth on a journey that threatens to consume her as well.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
