@@ -78,15 +78,15 @@ export default function TheShiftPage() {
         ></div>
       </div>
 
-      {/* THE SHIFT Titel oben */}
-      <div className="relative z-20 pt-8 px-4">
+      {/* THE SHIFT Titel */}
+      <div className="relative z-20 pt-24 px-4">
         <h1 
           className="text-white text-center animate-uneven-pulse"
           style={{
             fontFamily: 'var(--font-macbeth)',
-            fontSize: 'clamp(2rem, 8vw, 4rem)',
+            fontSize: 'clamp(4rem, 15vw, 8rem)',
             fontWeight: 400,
-            letterSpacing: '0.1em',
+            letterSpacing: '0.05em',
           }}
         >
           THE SHIFT
