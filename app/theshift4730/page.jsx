@@ -205,8 +205,13 @@ export default function TheShiftPage() {
 
   // Handler für Video schließen
   const handleCloseVideo = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current)
+    }
     if (introVideoRef.current) {
       introVideoRef.current.pause()
       introVideoRef.current.currentTime = 0
@@ -214,12 +219,12 @@ export default function TheShiftPage() {
     }
     setIsPlaying(false)
     setShowVideoModal(false)
-    setShowControls(false)
-    // Zurück zur Logline-Sektion scrollen
+    setShowControls(true)
+    // Zurück zur Logline-Sektion (Section 2) scrollen
     setTimeout(() => {
-      const loglineSection = document.querySelector('section')
-      if (loglineSection) {
-        loglineSection.scrollIntoView({ behavior: 'smooth' })
+      const sections = document.querySelectorAll('section')
+      if (sections.length > 0) {
+        sections[0].scrollIntoView({ behavior: 'smooth' })
       }
     }, 100)
   }
@@ -243,7 +248,11 @@ export default function TheShiftPage() {
     if (video) {
       const handlePlay = () => setIsPlaying(true)
       const handlePause = () => setIsPlaying(false)
-      const handleEnded = () => setIsPlaying(false)
+      const handleEnded = () => {
+        setIsPlaying(false)
+        // Video automatisch schließen und zur Section 2 scrollen
+        handleCloseVideo()
+      }
 
       video.addEventListener('play', handlePlay)
       video.addEventListener('pause', handlePause)
