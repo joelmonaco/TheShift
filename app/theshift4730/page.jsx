@@ -539,6 +539,14 @@ export default function TheShiftPage() {
           }}
         ></div>
 
+        {/* Gradient Verlauf zu schwarz unten */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-96 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
         {/* Content */}
         <div className="relative z-20 min-h-screen flex items-center justify-center px-4" style={{ paddingTop: '65vh', paddingBottom: '35vh' }}>
           <div 

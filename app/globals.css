@@ -1024,6 +1024,16 @@
   animation: bounce-arrow 2s ease-in-out infinite;
 }
 
+/* TV Static Animation */
+@keyframes tvStatic {
+  0% {
+    backgroundPosition: 0% 0%, 0% 0%;
+  }
+  100% {
+    backgroundPosition: 0% 100%, 4px 4px;
+  }
+}
+
 /* Flacker-Animation für Video-Start */
 @keyframes flicker-start {
   0% {
