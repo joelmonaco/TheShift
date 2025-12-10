@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -45,6 +45,13 @@ const inter = Inter({
   // Include common weights for better typography
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-playfair-display",
+  style: ["normal", "italic"],
 });
 
 // Basis-Metadaten für die gesamte App
@@ -141,7 +148,7 @@ export default async function RootLayout({ children }) {
         <meta name="google" content="notranslate" />
       </head>
       <body
-        className={`${inter.className} ${macbethFont.variable} ${courierPrime.variable} min-h-screen w-full antialiased overflow-x-hidden`}
+        className={`${inter.className} ${macbethFont.variable} ${courierPrime.variable} ${playfairDisplay.variable} min-h-screen w-full antialiased overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
         <div

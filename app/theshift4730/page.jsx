@@ -588,16 +588,26 @@ export default function TheShiftPage() {
         className="fixed bottom-8 right-8 z-50"
       >
         <div 
-          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
           style={{
-            fontFamily: 'var(--font-macbeth)',
             fontSize: '0.875rem',
-            fontWeight: 400,
             letterSpacing: '0.05em',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
           }}
         >
-          Watch teaser
+          {/* Play Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Watch teaser
+          </span>
         </div>
       </div>
       </div>
@@ -661,14 +671,14 @@ export default function TheShiftPage() {
                 lineHeight: '1.8',
               }}
             >
-              A shattering medical diagnosis swallows the older sister Hannah into The Shift, a sinister parallel universe shaped by her most haunting fears. Driven by love and grief, her younger sister Emilia steps into the same darkness, seeking the truth on a journey that threatens to consume her as well.
+              A shattering medical diagnosis swallows the older sister Hannah into <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>The Shift</span>, a sinister parallel universe shaped by her most haunting fears. Driven by love and grief, her younger sister Emilia steps into the same darkness, seeking the truth on a journey that threatens to consume her as well.
             </p>
 
             {/* Play Button */}
             <div className="flex justify-center mt-8">
               <button
                 onClick={handlePlayFirstMinutes}
-                className="px-8 py-3 text-base font-medium bg-white text-black hover:bg-gray-100 transition-all duration-200 rounded-xl flex items-center gap-3"
+                className="px-8 py-3 text-base font-medium bg-white text-black hover:bg-gray-100 transition-all duration-200 rounded-full flex items-center gap-3"
                 style={{
                   boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), 0 0 60px rgba(255, 255, 255, 0.15)',
                 }}
@@ -683,7 +693,7 @@ export default function TheShiftPage() {
                 >
                   <path d="M8 5v14l11-7z"/>
                 </svg>
-                <span style={{ fontFamily: 'var(--font-macbeth)' }}>
+                <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
                   Play First Minutes
                 </span>
               </button>
@@ -767,9 +777,9 @@ export default function TheShiftPage() {
                 lineHeight: '1.8',
               }}
             >
-              Hannah (28) and Emilia (21) are sisters bound by a deep, lifelong connection—yet they couldn&apos;t be more different. Hannah, the confident and charismatic rising film producer on the brink of her big breakthrough, has always pulled her quiet, introverted sister Emilia along in her wake. But when Hannah receives a devastating cancer diagnosis, a trauma she once endured as a child resurfaces, shattering the stability she worked so hard to build.
+              <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Hannah (28) and Emilia (21)</span> are sisters bound by a deep, lifelong connection—yet they couldn&apos;t be more different. Hannah, the confident and charismatic rising film producer on the brink of her big breakthrough, has always pulled her quiet, introverted sister Emilia along in her wake. But when Hannah receives a devastating cancer diagnosis, a trauma she once endured as a child resurfaces, shattering the stability she worked so hard to build.
               <br /><br />
-              As overwhelming fear, buried memories, and old wounds resurface, Hannah is suddenly dragged into The Shift: a dark parallel universe where every suppressed terror takes physical form. Though she manages to escape once, the second time she is pulled in, she never returns. In the real world, her body is found—her death ruled a suicide. But Emilia refuses to believe it. Grieving the loss of the sister, Emilia begins searching for answers—and is soon swallowed by The Shift herself.
+              As overwhelming fear, buried memories, and old wounds resurface, Hannah is suddenly dragged into <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>The Shift</span>: a dark parallel universe where every suppressed terror takes physical form. Though she manages to escape once, the second time she is pulled in, she never returns. In the real world, her body is found—her death ruled a suicide. But Emilia refuses to believe it. Grieving the loss of the sister, Emilia begins searching for answers—and is soon swallowed by <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>The Shift</span> herself.
             </p>
           </div>
         </div>
@@ -915,9 +925,9 @@ export default function TheShiftPage() {
                 >
                   Hannah, 28, is charismatic, magnetic, and effortlessly confident—the kind of woman who commands any room. With her blonde hair, sharp style, and warm, open energy, she&apos;s a rising film producer on the verge of major success. Behind her polished exterior, however, lies a vulnerability shaped by a serious childhood illness she&apos;s long tried to bury.
                   <br /><br />
-                  She projects strength, yet quietly carries fears she never reveals—especially to her younger sister, Emilia, whom she has always fiercely protected. Hannah&apos;s defining tension lies in this contrast: a woman who appears unstoppable, but privately battles the shadows of her past.
+                  She projects strength, yet quietly carries <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>fears she never reveals</span>—especially to her younger sister, Emilia, whom she has always fiercely protected. Hannah&apos;s defining tension lies in this contrast: a woman who appears unstoppable, but privately battles the shadows of her past.
                   <br /><br />
-                  Played by Eli Riccardi, known from Maxton Hall, Mandy und die Mächte des Bösen, and more.
+                  Played by Eli Riccardi, known from <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Maxton Hall</span>, Mandy und die Mächte des Bösen, and more.
                 </p>
               </div>
             </div>
@@ -996,11 +1006,11 @@ export default function TheShiftPage() {
                     lineHeight: '1.8',
                   }}
                 >
-                  Emilia, 21, is quiet, quirky, and deeply introverted—a true wallflower. With her soft brown hair and gentle eyes, she carries a natural shyness that makes her blend into the background. She still lives in her small hometown, recently starting medical school more out of safety than ambition.
+                  Emilia, 21, is quiet, quirky, and deeply introverted—<span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>a true wallflower</span>. With her soft brown hair and gentle eyes, she carries a natural shyness that makes her blend into the background. She still lives in her small hometown, recently starting medical school more out of safety than ambition.
                   <br /><br />
                   Overshadowed her whole life by her confident older sister, Hannah, Emilia relied on her as both protector and anchor. That dependence left Emilia sheltered, with few friends, a strained relationship with her mother, and little sense of her own identity. Defined by her sensitivity and hesitation, Emilia is someone who has never learned to stand on her own—now forced to confront a world, and fears, she&apos;s long avoided.
                   <br /><br />
-                  Played by Lina Hüesker, known from Hilfe, ich hab meine Lehrerin geschrumpft, Vaterfreuden and more.
+                  Played by Lina Hüesker, known from <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Hilfe, ich hab meine Lehrerin geschrumpft</span>, Vaterfreuden and more.
                 </p>
               </div>
             </div>
@@ -1057,7 +1067,7 @@ export default function TheShiftPage() {
                   lineHeight: '1.8',
                 }}
               >
-                The Shift is a supernatural, distorted reflection of reality—a parallel dimension where a person&apos;s deepest fears and hidden traumas physically manifest. It cannot be entered by choice; it pulls people in when their inner world begins to collapse.
+                The Shift is a supernatural, distorted reflection of reality—a <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>parallel dimension</span> where a person&apos;s deepest fears and hidden traumas physically manifest. It cannot be entered by choice; it pulls people in when their inner world begins to collapse.
                 <br /><br />
                 Fueled by raw emotion, The Shift grows stronger with fear and pain, twisting memories and playing with its victims like a predator. Though it feels like a nightmare, everything that happens inside it has real and often devastating consequences in the real world.
               </p>
@@ -1168,7 +1178,7 @@ export default function TheShiftPage() {
                 lineHeight: '1.8',
               }}
             >
-              The Shift combines a warm, old-school coming-of-age aesthetic—echoing films like Stand By Me or What&apos;s Eating Gilbert Grape—with the unsettling, modern horror tone of It Follows and Hereditary. The real world feels nostalgic and grounded, shaped by soft lighting, natural textures, and a timeless small-town atmosphere. Vintage outfits, classic cars, and recurring nods to old music and film reinforce its sense of nostalgia.
+              The Shift combines a warm, old-school coming-of-age aesthetic—echoing films like <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Stand By Me or What&apos;s Eating Gilbert Grape</span>—with the unsettling, modern horror tone of <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>It Follows</span> and <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Hereditary</span>. The real world feels nostalgic and grounded, shaped by soft lighting, natural textures, and a timeless small-town atmosphere. Vintage outfits, classic cars, and recurring nods to old music and film reinforce its sense of nostalgia.
               <br /><br />
               In contrast, The Shift presents a distorted, eerie version of reality: muted colors, uncanny stillness, and subtle surrealism.
             </p>
@@ -1441,7 +1451,7 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
               letterSpacing: '0.01em',
             }}
           >
-            The Shift explores fear, trauma, and psychological struggle by shaping them into physical, liminal spaces the audience can feel. Inspired by classic indie horror like Halloween and The Evil Dead, we value the creativity born from limitations and bold, timeless storytelling. At the same time, we&apos;re drawn to the warmth and nostalgia of small-town &quot;everyman&quot; stories that echo our own childhood memories. The Shift blends these worlds into a haunting mix of psychological horror and intimate nostalgia—set in a place anyone can recognize.
+            The Shift explores fear, trauma, and psychological struggle by shaping them into physical, liminal spaces the audience can feel. Inspired by classic indie horror like <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Halloween</span> and <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>The Evil Dead</span>, we value the creativity born from limitations and bold, timeless storytelling. At the same time, we&apos;re drawn to the warmth and nostalgia of small-town &quot;everyman&quot; stories that echo our own childhood memories. The Shift blends these worlds into a haunting mix of psychological horror and intimate nostalgia—set in a place anyone can recognize.
           </p>
         </div>
       </section>
@@ -1519,7 +1529,7 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
                 lineHeight: '1.8',
               }}
             >
-              - Benedict Wells
+              - <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Benedict Wells</span>
             </p>
           </div>
         </div>
