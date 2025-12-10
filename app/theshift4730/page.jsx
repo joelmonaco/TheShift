@@ -602,13 +602,14 @@ export default function TheShiftPage() {
         </svg>
       </div>
 
-      {/* Watch Teaser Badge - Fixed unten rechts */}
+      {/* Watch Teaser Badge - Fixed unten rechts (Desktop) / unten zentriert (Mobile) */}
       <div 
-        className="fixed bottom-8 right-8 z-50 flex flex-col gap-3"
+        className="fixed bottom-8 right-8 md:right-8 left-1/2 md:left-auto -translate-x-1/2 md:translate-x-0 z-50 flex flex-row md:flex-col gap-3 md:gap-3 items-center justify-center md:items-stretch md:justify-start"
       >
+        {/* Desktop: Buttons untereinander mit Icons */}
         <button
           onClick={handleWatchTeaser}
-          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors hidden md:flex items-center gap-3"
           style={{
             fontSize: '0.875rem',
             letterSpacing: '0.05em',
@@ -634,7 +635,7 @@ export default function TheShiftPage() {
           href="https://drive.google.com/file/d/1SbwY-9aU8uy3AaMJrhdXJGdmTu-F_O9A/view"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors hidden md:flex items-center gap-3"
           style={{
             fontSize: '0.875rem',
             letterSpacing: '0.05em',
@@ -660,7 +661,7 @@ export default function TheShiftPage() {
           href="https://untitled.stream/library/project/ZG2YSP1XQd4Off0kgF4ro"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors hidden md:flex items-center gap-3"
           style={{
             fontSize: '0.875rem',
             letterSpacing: '0.05em',
@@ -680,6 +681,84 @@ export default function TheShiftPage() {
           </svg>
           <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
             Explore Soundtrack
+          </span>
+        </a>
+
+        {/* Mobile: Buttons nebeneinander mit Icons */}
+        <button
+          onClick={handleWatchTeaser}
+          className="bg-white text-black rounded-full px-5 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex md:hidden items-center gap-2"
+          style={{
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            border: 'none',
+          }}
+        >
+          {/* Play Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Teaser
+          </span>
+        </button>
+        <a
+          href="https://drive.google.com/file/d/1SbwY-9aU8uy3AaMJrhdXJGdmTu-F_O9A/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white text-black rounded-full px-5 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex md:hidden items-center gap-2"
+          style={{
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            textDecoration: 'none',
+          }}
+        >
+          {/* Book Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Script
+          </span>
+        </a>
+        <a
+          href="https://untitled.stream/library/project/ZG2YSP1XQd4Off0kgF4ro"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white text-black rounded-full px-5 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex md:hidden items-center gap-2"
+          style={{
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            textDecoration: 'none',
+          }}
+        >
+          {/* Music Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Music
           </span>
         </a>
       </div>
