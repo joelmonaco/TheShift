@@ -636,7 +636,12 @@ export default function TheShiftPage() {
               muted
               playsInline
               preload="auto"
-              className="absolute top-0 left-0 w-full h-full object-cover"
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 ${
+                isHoveringHannah ? 'grayscale-0' : 'grayscale'
+              }`}
+              style={{
+                filter: isHoveringHannah ? 'grayscale(0%)' : 'grayscale(100%)',
+              }}
             >
               <source src="/Video_3.mov" type="video/quicktime" />
               <source src="/Video_3.mov" type="video/mp4" />
@@ -710,7 +715,12 @@ export default function TheShiftPage() {
               muted
               playsInline
               preload="auto"
-              className="absolute top-0 left-0 w-full h-full object-cover"
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 ${
+                isHoveringEmilia ? 'grayscale-0' : 'grayscale'
+              }`}
+              style={{
+                filter: isHoveringEmilia ? 'grayscale(0%)' : 'grayscale(100%)',
+              }}
             >
               <source src="/Video_4.mov" type="video/quicktime" />
               <source src="/Video_4.mov" type="video/mp4" />
