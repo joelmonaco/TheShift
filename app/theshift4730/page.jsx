@@ -36,6 +36,7 @@ export default function TheShiftPage() {
   const synopsisTextRef = useRef(null)
   const mysteryTextRef = useRef(null)
   const [showVideoModal, setShowVideoModal] = useState(false)
+  const [showTeaserModal, setShowTeaserModal] = useState(false)
   const [isFading, setIsFading] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showControls, setShowControls] = useState(true)
@@ -363,6 +364,24 @@ export default function TheShiftPage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handler für Watch Teaser Button
+  const handleWatchTeaser = () => {
+    setIsFading(true)
+    setTimeout(() => {
+      setIsFading(false)
+      setShowTeaserModal(true)
+    }, 1500)
+  }
+
+  // Handler für Teaser Video schließen
+  const handleCloseTeaser = (e) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    setShowTeaserModal(false)
+  }
+
   // Handler für Play First Minutes Button
   const handlePlayFirstMinutes = () => {
     setIsFading(true)
@@ -585,14 +604,16 @@ export default function TheShiftPage() {
 
       {/* Watch Teaser Badge - Fixed unten rechts */}
       <div 
-        className="fixed bottom-8 right-8 z-50"
+        className="fixed bottom-8 right-8 z-50 flex flex-col gap-3"
       >
-        <div 
+        <button
+          onClick={handleWatchTeaser}
           className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
           style={{
             fontSize: '0.875rem',
             letterSpacing: '0.05em',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            border: 'none',
           }}
         >
           {/* Play Icon */}
@@ -608,7 +629,59 @@ export default function TheShiftPage() {
           <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
             Watch teaser
           </span>
-        </div>
+        </button>
+        <a
+          href="https://drive.google.com/file/d/1SbwY-9aU8uy3AaMJrhdXJGdmTu-F_O9A/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
+          style={{
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            textDecoration: 'none',
+          }}
+        >
+          {/* Book Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Read Script
+          </span>
+        </a>
+        <a
+          href="https://untitled.stream/library/project/ZG2YSP1XQd4Off0kgF4ro"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white text-black rounded-full px-6 py-3 cursor-pointer hover:bg-gray-100 transition-colors flex items-center gap-3"
+          style={{
+            fontSize: '0.875rem',
+            letterSpacing: '0.05em',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            textDecoration: 'none',
+          }}
+        >
+          {/* Music Icon */}
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="flex-shrink-0"
+          >
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 900 }}>
+            Explore Soundtrack
+          </span>
+        </a>
       </div>
       </div>
 
@@ -1315,7 +1388,9 @@ Ein mechanisches SURREN setzt ein - ein motorisierter Schlitten gleitet in eine 
 ARZTHELFERIN (O.S.) (CONT'D)
 Wir können die Struktur noch nicht ganz beurteilen. Sie bekommen jetzt das Kontrastmittel. Eventuell fühlt es sich wieder etwas kalt an.
 
-Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicherten Blick der Arzthelferin hinter dem Computer.`]}
+Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicherten Blick der Arzthelferin hinter dem Computer.
+
+MORE`]}
                         typingSpeed={150}
                         pauseDuration={0}
                         showCursor={true}
@@ -1544,6 +1619,58 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
             animation: 'fadeToBlack 1.5s ease-in forwards',
           }}
         />
+      )}
+
+      {/* Teaser Video Modal Fullscreen */}
+      {showTeaserModal && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          onClick={handleCloseTeaser}
+        >
+          {/* Close Button - Rechts oben (immer sichtbar) */}
+          <button
+            onClick={handleCloseTeaser}
+            onMouseDown={(e) => e.stopPropagation()}
+            className="absolute top-8 right-8 z-[102] text-white hover:text-gray-300 transition-all duration-200 cursor-pointer opacity-100"
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'auto',
+            }}
+          >
+            <svg 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
+          {/* Vimeo Video Embed */}
+          <div 
+            className="relative w-full h-full"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+          >
+            <iframe
+              src="https://player.vimeo.com/video/1139640898?h=8b743457b3&autoplay=1"
+              className="w-full h-full"
+              style={{ aspectRatio: '16/9' }}
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title="The Shift Teaser"
+            ></iframe>
+          </div>
+        </div>
       )}
 
       {/* Video Modal Fullscreen */}

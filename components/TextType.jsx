@@ -175,6 +175,7 @@ const TextType = ({
           <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
             {displayedCenteredText.split('\n').map((line, index, array) => {
               const isTheShift = line.trim() === 'THE SHIFT';
+              const isLastLine = index === array.length - 1;
               return (
                 <span key={index}>
                   {isTheShift ? (
@@ -182,19 +183,19 @@ const TextType = ({
                   ) : (
                     line
                   )}
+                  {isLastLine && showCursor && isInCenteredPart ? (
+                    <span
+                      ref={cursorRef}
+                      className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
+                    >
+                      {cursorCharacter}
+                    </span>
+                  ) : null}
                   {index < array.length - 1 ? '\n' : ''}
                 </span>
               );
             })}
           </span>
-          {showCursor && isInCenteredPart && (
-            <span
-              ref={cursorRef}
-              className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
-            >
-              {cursorCharacter}
-            </span>
-          )}
         </div>
       )}
       {displayedLeftText && (
@@ -204,6 +205,7 @@ const TextType = ({
               // Erkenne Dialog-Zeilen (ARZTHELFERIN (O.S.) oder ARZTHELFERIN (O.S.) (CONT'D) oder ähnliche)
               const isDialogHeader = /^[A-Z\s]+\([^)]+\)(\s*\([^)]+\))?$/.test(line.trim());
               const isDialogText = index > 0 && /^[A-Z\s]+\([^)]+\)(\s*\([^)]+\))?$/.test(array[index - 1].trim());
+              const isMoreLine = line.trim() === 'MORE';
               
               if (isDialogHeader || isDialogText) {
                 return (
@@ -213,17 +215,43 @@ const TextType = ({
                   </div>
                 );
               }
+              if (isMoreLine) {
+                const fullText = textArray[currentTextIndex] || '';
+                const isComplete = displayedText === fullText;
+                return (
+                  <span key={index}>
+                    {isComplete ? (
+                      <a 
+                        href="https://drive.google.com/file/d/1SbwY-9aU8uy3AaMJrhdXJGdmTu-F_O9A/view" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ 
+                          fontWeight: 700, 
+                          color: 'inherit', 
+                          textDecoration: 'underline',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {line}
+                      </a>
+                    ) : (
+                      line
+                    )}
+                    {index < array.length - 1 ? '\n' : ''}
+                  </span>
+                );
+              }
               return <span key={index}>{line}{index < array.length - 1 ? '\n' : ''}</span>;
             })}
+            {showCursor && !isInCenteredPart && (
+              <span
+                ref={cursorRef}
+                className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
+              >
+                {cursorCharacter}
+              </span>
+            )}
           </span>
-          {showCursor && !isInCenteredPart && (
-            <span
-              ref={cursorRef}
-              className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
-            >
-              {cursorCharacter}
-            </span>
-          )}
         </div>
       )}
     </>
