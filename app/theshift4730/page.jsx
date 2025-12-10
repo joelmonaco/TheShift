@@ -625,6 +625,14 @@ export default function TheShiftPage() {
             background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
           }}
         ></div>
+        
+        {/* Gradient Verlauf zu schwarz unten */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-32 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
         <div className="flex h-screen relative">
           {/* HOVER HERE Text - nur sichtbar wenn noch nicht gehovert wurde */}
           {!hasHovered && (
