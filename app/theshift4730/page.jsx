@@ -12,12 +12,16 @@ export default function TheShiftPage() {
   const video4Ref = useRef(null)
   const video5Ref = useRef(null)
   const container5Ref = useRef(null)
+  const video6Ref = useRef(null)
+  const container6Ref = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
   const [shouldFlicker2, setShouldFlicker2] = useState(true)
   const [isLastHalfSecond2, setIsLastHalfSecond2] = useState(false)
   const [shouldFlicker5, setShouldFlicker5] = useState(false)
   const [isLastHalfSecond5, setIsLastHalfSecond5] = useState(false)
+  const [shouldFlicker6, setShouldFlicker6] = useState(false)
+  const [isLastHalfSecond6, setIsLastHalfSecond6] = useState(false)
   const [isHoveringHannah, setIsHoveringHannah] = useState(false)
   const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
   const [hasHovered, setHasHovered] = useState(false)
@@ -248,6 +252,92 @@ export default function TheShiftPage() {
       video.addEventListener('canplay', () => {
         video.play().catch(err => {
           console.error('Video 5 Autoplay-Fehler:', err)
+        })
+      })
+      
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate)
+        observer.disconnect()
+      }
+    }
+  }, [])
+
+  // Video 6 Flackern-Effekt (wie Video 5)
+  useEffect(() => {
+    const video = video6Ref.current
+    const container = container6Ref.current
+    if (video && container) {
+      let lastTime = 0
+      let isNearEnd = false
+      
+      const triggerFlicker = () => {
+        if (container) {
+          container.classList.remove('animate-flicker-start')
+          void container.offsetWidth // Trigger reflow
+          setTimeout(() => {
+            container.classList.add('animate-flicker-start')
+            setShouldFlicker6(true)
+            setTimeout(() => {
+              setShouldFlicker6(false)
+            }, 2000)
+          }, 10)
+        }
+      }
+      
+      // Intersection Observer für erstes Erscheinen
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+              // Section ist sichtbar geworden - Flackern triggern
+              triggerFlicker()
+              observer.disconnect() // Nur einmal triggern
+            }
+          })
+        },
+        { threshold: 0.1 }
+      )
+      
+      if (container) {
+        observer.observe(container)
+      }
+      
+      // Event Listener für Video-Loop
+      const handleTimeUpdate = () => {
+        const currentTime = video.currentTime
+        const duration = video.duration
+        
+        if (duration > 0) {
+          const timeUntilEnd = duration - currentTime
+          
+          // Prüfe ob Video in der letzten halben Sekunde ist - dann komplett schwarz
+          if (timeUntilEnd <= 0.5 && timeUntilEnd > 0) {
+            setIsLastHalfSecond6(true)
+          } else {
+            setIsLastHalfSecond6(false)
+          }
+          
+          // Prüfe ob Video in der letzten Sekunde ist - dann flackern (aber nicht in der letzten halben Sekunde)
+          if (timeUntilEnd <= 1 && timeUntilEnd > 0.5 && !isNearEnd) {
+            isNearEnd = true
+            triggerFlicker()
+          }
+          
+          // Wenn Video zurückgesprungen ist (Loop hat neu gestartet)
+          if (isNearEnd && currentTime < 0.5 && lastTime > duration * 0.9) {
+            isNearEnd = false
+            setIsLastHalfSecond6(false)
+            triggerFlicker()
+          }
+        }
+        
+        lastTime = currentTime
+      }
+      
+      video.addEventListener('timeupdate', handleTimeUpdate)
+      video.addEventListener('canplay', () => {
+        video.play().catch(err => {
+          console.error('Video 6 Autoplay-Fehler:', err)
         })
       })
       
@@ -1004,6 +1094,79 @@ export default function TheShiftPage() {
                 background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
               }}
             ></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sechster Abschnitt - Visual Concept */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Video Hintergrund mit Flackern */}
+        <div 
+          ref={container6Ref}
+          className={`absolute top-0 left-0 w-full h-full z-0 ${shouldFlicker6 ? 'animate-flicker-start' : ''}`}
+        >
+          <video
+            ref={video6Ref}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+            style={{
+              opacity: isLastHalfSecond6 ? 0 : 1,
+              transition: 'opacity 0.1s ease-out',
+            }}
+          >
+            <source src="/Video_6.mov" type="video/quicktime" />
+            <source src="/Video_6.mov" type="video/mp4" />
+            Dein Browser unterstützt das Video-Tag nicht.
+          </video>
+        </div>
+
+        {/* Dunkler transparenter Layer */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
+
+        {/* Gradient Verlauf zu schwarz unten */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-96 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        {/* Content */}
+        <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-24" style={{ paddingTop: '25vh' }}>
+          <div 
+            className="max-w-4xl mx-auto text-center"
+          >
+            {/* Überschrift VISUAL CONCEPT */}
+            <h2 
+              className="text-white mb-4 animate-uneven-pulse"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(2rem, 6vw, 4rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              VISUAL CONCEPT
+            </h2>
+
+            {/* Text */}
+            <p 
+              className="text-white text-lg md:text-xl leading-relaxed mb-8"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 600,
+                letterSpacing: '0.01em',
+                lineHeight: '1.8',
+              }}
+            >
+              The Shift combines a warm, old-school coming-of-age aesthetic—echoing films like Stand By Me or What&apos;s Eating Gilbert Grape—with the unsettling, modern horror tone of It Follows and Hereditary. The real world feels nostalgic and grounded, shaped by soft lighting, natural textures, and a timeless small-town atmosphere. Vintage outfits, classic cars, and recurring nods to old music and film reinforce its sense of nostalgia.
+              <br /><br />
+              In contrast, The Shift presents a distorted, eerie version of reality: muted colors, uncanny stillness, and subtle surrealism.
+            </p>
           </div>
         </div>
       </section>
