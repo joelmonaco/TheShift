@@ -1394,7 +1394,7 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
       </section>
 
       {/* Elfter Abschnitt - Note of the Authors */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '80vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '20vh' }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
           <Image
             src="/Bilder/Bild_Breit_2.png"
@@ -1407,8 +1407,8 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
           <div 
             className="absolute bottom-0 left-0 w-full pointer-events-none"
             style={{
-              height: '40%',
-              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
+              height: '50%',
+              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%)',
               zIndex: 1,
             }}
           />
@@ -1417,9 +1417,9 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
 
       {/* Zwölfter Abschnitt - Note of the Authors (über dem Bild) */}
       <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: '-40vh', zIndex: 20 }}>
-        <div className="relative w-full" style={{ paddingLeft: '6rem', paddingRight: '2rem' }}>
+        <div className="relative w-full flex flex-col justify-center items-center" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
           <h2
-            className="text-white animate-uneven-pulse"
+            className="text-white animate-uneven-pulse text-center mb-8"
             style={{
               fontFamily: 'var(--font-macbeth)',
               fontSize: 'clamp(2.5rem, 6vw, 5rem)',
@@ -1429,8 +1429,99 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
               textShadow: '0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3)',
             }}
           >
-            NOTE OF<br />THE AUTHORS
+            NOTE OF THE AUTHORS
           </h2>
+          <p
+            className="text-white text-center max-w-6xl"
+            style={{
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              fontWeight: 400,
+              lineHeight: '1.8',
+              letterSpacing: '0.01em',
+            }}
+          >
+            The Shift explores fear, trauma, and psychological struggle by shaping them into physical, liminal spaces the audience can feel. Inspired by classic indie horror like Halloween and The Evil Dead, we value the creativity born from limitations and bold, timeless storytelling. At the same time, we&apos;re drawn to the warmth and nostalgia of small-town &quot;everyman&quot; stories that echo our own childhood memories. The Shift blends these worlds into a haunting mix of psychological horror and intimate nostalgia—set in a place anyone can recognize.
+          </p>
+        </div>
+      </section>
+
+      {/* Dreizehnter Abschnitt - Quote */}
+      <section className="relative min-h-screen bg-black overflow-hidden" style={{ marginTop: '20vh' }}>
+        {/* Video Hintergrund */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        >
+          <source src="/Video_9.mov" type="video/quicktime" />
+          <source src="/Video_9.mov" type="video/mp4" />
+          Dein Browser unterstützt das Video-Tag nicht.
+        </video>
+
+        {/* Dunkler transparenter Layer */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/10 z-10"></div>
+
+        {/* Gradient Verlauf zu schwarz oben */}
+        <div 
+          className="absolute top-0 left-0 w-full h-96 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        {/* Gradient Verlauf zu schwarz unten */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-96 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        {/* Content */}
+        <div className="relative z-20 min-h-screen flex items-center justify-center px-4 py-24" style={{ paddingTop: '25vh' }}>
+          <div 
+            ref={loglineTextRef}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <h2 
+              className="text-white mb-8 animate-uneven-pulse"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(4rem, 12vw, 8rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              THE SHIFT
+            </h2>
+            
+            <p 
+              className="text-white text-lg md:text-xl leading-relaxed mb-4"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 600,
+                letterSpacing: '0.01em',
+                lineHeight: '1.8',
+              }}
+            >
+              &quot;Eine faszinierende Idee, die manches aus Stranger Things noch einmal deutlich weiterdreht und um eine psychologische Komponente ergänzt, die besonders spannend ist.&quot;
+            </p>
+            <p 
+              className="text-white text-base md:text-lg"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontWeight: 400,
+                letterSpacing: '0.01em',
+                lineHeight: '1.8',
+              }}
+            >
+              - Benedict Wells
+            </p>
+          </div>
         </div>
       </section>
 
