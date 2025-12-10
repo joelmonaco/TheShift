@@ -1241,12 +1241,12 @@ export default function TheShiftPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-4 gap-8">
             {/* Weißes Blatt - so breit wie Video 8 (4 Spalten) */}
-            <div className="col-span-4 relative" style={{ minHeight: '80vh' }}>
+            <div className="col-span-4 relative" style={{ height: '120vh' }}>
               {/* Hintere Blätter (Stapel-Effekt) */}
               <div 
                 className="absolute inset-0 bg-white"
                 style={{
-                  transform: 'translate(16px, 16px)',
+                  transform: 'translate(16px, 16px) rotate(5deg)',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                   zIndex: 1,
                 }}
@@ -1254,7 +1254,7 @@ export default function TheShiftPage() {
               <div 
                 className="absolute inset-0 bg-white"
                 style={{
-                  transform: 'translate(8px, 8px)',
+                  transform: 'translate(8px, 8px) rotate(5deg)',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
                   zIndex: 2,
                 }}
@@ -1264,7 +1264,8 @@ export default function TheShiftPage() {
                 className="relative bg-white p-12 shadow-2xl"
                 style={{
                   zIndex: 3,
-                  minHeight: '80vh',
+                  height: '100%',
+                  transform: 'rotate(5deg)',
                 }}
               >
               <div className="max-w-4xl mx-auto">
