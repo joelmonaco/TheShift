@@ -16,6 +16,7 @@ export default function TheShiftPage() {
   const [isLastHalfSecond2, setIsLastHalfSecond2] = useState(false)
   const [isHoveringHannah, setIsHoveringHannah] = useState(false)
   const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
+  const [hasHovered, setHasHovered] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const heroTextRef = useRef(null)
   const loglineTextRef = useRef(null)
@@ -367,10 +368,10 @@ export default function TheShiftPage() {
       <div 
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer group hover:opacity-80 transition-opacity" 
         onClick={() => {
-          // Finde die zweite Section (Logline-Sektion)
+          // Finde die zweite Section (Logline-Sektion) - das erste <section> Element
           const sections = document.querySelectorAll('section')
-          if (sections.length > 1) {
-            sections[1].scrollIntoView({ behavior: 'smooth' })
+          if (sections.length > 0) {
+            sections[0].scrollIntoView({ behavior: 'smooth' })
           }
         }}
       >
@@ -624,12 +625,33 @@ export default function TheShiftPage() {
             background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
           }}
         ></div>
-        <div className="flex h-screen">
+        <div className="flex h-screen relative">
+          {/* HOVER HERE Text - nur sichtbar wenn noch nicht gehovert wurde */}
+          {!hasHovered && (
+            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+              <p 
+                className="text-white text-center animate-uneven-pulse"
+                style={{
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
+                  fontWeight: 400,
+                  fontStyle: 'italic',
+                  letterSpacing: '0.1em',
+                  opacity: 0.9,
+                  textShadow: '0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3)',
+                }}
+              >
+                HOVER HERE
+              </p>
+            </div>
+          )}
+          
           {/* Linke Seite - Hannah */}
           <div 
             className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
             onMouseEnter={() => {
               setIsHoveringHannah(true)
+              setHasHovered(true)
               if (video3Ref.current) {
                 video3Ref.current.play().catch(err => console.error('Video play error:', err))
               }
@@ -712,6 +734,7 @@ export default function TheShiftPage() {
             className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
             onMouseEnter={() => {
               setIsHoveringEmilia(true)
+              setHasHovered(true)
               if (video4Ref.current) {
                 video4Ref.current.play().catch(err => console.error('Video play error:', err))
               }
