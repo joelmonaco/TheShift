@@ -1234,6 +1234,17 @@ export default function TheShiftPage() {
               
               {/* Weißes Blatt - über Video 8 positioniert */}
               <div className="absolute top-0 left-0 w-full" style={{ height: '120vh', transform: 'translateY(75vh)', zIndex: 10 }}>
+                {/* Weicher Schatten hinter den Blättern */}
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    transform: 'rotate(3deg)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.2)',
+                    zIndex: 0,
+                    filter: 'blur(20px)',
+                    opacity: 0.6,
+                  }}
+                />
                 {/* Hintere Blätter (Stapel-Effekt) */}
                 <div 
                   className="absolute inset-0 bg-white"
@@ -1258,6 +1269,7 @@ export default function TheShiftPage() {
                     zIndex: 3,
                     height: '100%',
                     transform: 'rotate(3deg)',
+                    boxShadow: '0 15px 50px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(0, 0, 0, 0.15)',
                   }}
                 >
                   <div className="max-w-4xl mx-auto">
