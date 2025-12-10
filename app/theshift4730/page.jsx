@@ -1271,7 +1271,7 @@ export default function TheShiftPage() {
                 {/* Gesamter Text mit einem einzigen Cursor */}
                 <div 
                   style={{
-                    fontFamily: "'Special Elite', monospace",
+                    fontFamily: 'var(--font-courier-prime), monospace',
                     fontSize: '0.9rem',
                     lineHeight: '1.8',
                     letterSpacing: '0.02em',
@@ -1290,29 +1290,17 @@ Episode One - Erwachen
 
 EXT. WALDLICHTUNG - MORGEN 1
 
-Tau liegt schwer auf der sattgrünen Wiese. Langsam läuft ein
-einzelnes Reh auf die Lichtung, sein Fell golden gestreichelt
-von den ersten Sonnenstrahlen. Die Welt ist still – nur
-entferntes Vogelgezwitscher dringt aus dem Dickicht.
-Das Reh zupft ruhig an einem Grashalm.
+Tau liegt schwer auf der sattgrünen Wiese. Langsam läuft ein einzelnes Reh auf die Lichtung, sein Fell golden gestreichelt von den ersten Sonnenstrahlen. Die Welt ist still – nur entferntes Vogelgezwitscher dringt aus dem Dickicht. Das Reh zupft ruhig an einem Grashalm.
 
 ARZTHELFERIN (O.S.)
-Es tut uns leid, Frau Kessler, aber
-wir müssen die Aufnahme
-wiederholen.
+Es tut uns leid, Frau Kessler, aber wir müssen die Aufnahme wiederholen.
 
-Ein mechanisches SURREN setzt ein - ein motorisierter
-Schlitten gleitet in eine MRT-Röhre und rastet ein.
+Ein mechanisches SURREN setzt ein - ein motorisierter Schlitten gleitet in eine MRT-Röhre und rastet ein.
 
 ARZTHELFERIN (O.S.) (CONT'D)
-Wir können die Struktur noch nicht
-ganz beurteilen. Sie bekommen jetzt
-das Kontrastmittel. Eventuell fühlt
-es sich wieder etwas kalt an.
+Wir können die Struktur noch nicht ganz beurteilen. Sie bekommen jetzt das Kontrastmittel. Eventuell fühlt es sich wieder etwas kalt an.
 
-Das Surren der MRT-Röhre wird allmählich intensiver. Wir
-sehen den verunsicherten Blick der Arzthelferin hinter dem
-Computer.`]}
+Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicherten Blick der Arzthelferin hinter dem Computer.`]}
                     typingSpeed={150}
                     pauseDuration={0}
                     showCursor={true}

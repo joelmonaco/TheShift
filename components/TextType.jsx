@@ -171,9 +171,21 @@ const TextType = ({
     },
     <>
       {centeredEndIndex > 0 && (
-        <div className="text-center mb-6" style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '0.1em' }}>
+        <div className="text-center mb-16" style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '0.1em', lineHeight: '1.2', whiteSpace: 'pre-line' }}>
           <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
-            {displayedCenteredText}
+            {displayedCenteredText.split('\n').map((line, index, array) => {
+              const isTheShift = line.trim() === 'THE SHIFT';
+              return (
+                <span key={index}>
+                  {isTheShift ? (
+                    <span style={{ textDecoration: 'underline' }}>{line}</span>
+                  ) : (
+                    line
+                  )}
+                  {index < array.length - 1 ? '\n' : ''}
+                </span>
+              );
+            })}
           </span>
           {showCursor && isInCenteredPart && (
             <span
@@ -186,9 +198,23 @@ const TextType = ({
         </div>
       )}
       {displayedLeftText && (
-        <div className="text-left" style={{ fontSize: '0.9rem' }}>
-          <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
-            {displayedLeftText}
+        <div className="text-left" style={{ fontSize: '1rem', textAlign: 'left', width: '100%' }}>
+          <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit', display: 'block', textAlign: 'left' }}>
+            {displayedLeftText.split('\n').map((line, index, array) => {
+              // Erkenne Dialog-Zeilen (ARZTHELFERIN (O.S.) oder ARZTHELFERIN (O.S.) (CONT'D) oder ähnliche)
+              const isDialogHeader = /^[A-Z\s]+\([^)]+\)(\s*\([^)]+\))?$/.test(line.trim());
+              const isDialogText = index > 0 && /^[A-Z\s]+\([^)]+\)(\s*\([^)]+\))?$/.test(array[index - 1].trim());
+              
+              if (isDialogHeader || isDialogText) {
+                return (
+                  <div key={index} style={{ textAlign: 'center' }}>
+                    {line}
+                    {index < array.length - 1 ? '\n' : ''}
+                  </div>
+                );
+              }
+              return <span key={index}>{line}{index < array.length - 1 ? '\n' : ''}</span>;
+            })}
           </span>
           {showCursor && !isInCenteredPart && (
             <span

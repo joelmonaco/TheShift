@@ -12,6 +12,34 @@ const macbethFont = localFont({
   display: "swap",
 });
 
+// Courier Prime Fonts
+const courierPrime = localFont({
+  src: [
+    {
+      path: "./fonts/CourierPrime-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/CourierPrime-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "./fonts/CourierPrime-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/CourierPrime-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-courier-prime",
+  display: "swap",
+});
+
 const inter = Inter({
   subsets: ["latin"],
   // Include common weights for better typography
@@ -113,7 +141,7 @@ export default async function RootLayout({ children }) {
         <meta name="google" content="notranslate" />
       </head>
       <body
-        className={`${inter.className} ${macbethFont.variable} min-h-screen w-full antialiased overflow-x-hidden`}
+        className={`${inter.className} ${macbethFont.variable} ${courierPrime.variable} min-h-screen w-full antialiased overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
         <div
