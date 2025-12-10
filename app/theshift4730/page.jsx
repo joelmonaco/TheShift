@@ -1322,6 +1322,18 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
         </div>
       </section>
 
+      {/* Neunter Abschnitt - Breites Bild (unter den Blättern) */}
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '80vh' }}>
+        <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
+          <Image
+            src="/Bilder/Bild_Breit_1.png"
+            alt="Bild Breit 1"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+      </section>
 
       {/* Fade-to-Black Overlay */}
       {isFading && (
