@@ -987,11 +987,13 @@ export default function TheShiftPage() {
               </video>
             </div>
             
-            {/* Gradient Verlauf zu schwarz links (zur Mitte hin) */}
+            {/* Gradient Verlauf zu schwarz links (nur am linken Rand) */}
             <div 
-              className="absolute top-0 left-0 w-full h-full pointer-events-none z-10"
+              className="absolute top-0 left-0 pointer-events-none z-10"
               style={{
-                background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%)',
+                width: '30%',
+                height: '100%',
+                background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
               }}
             ></div>
           </div>
