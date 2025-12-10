@@ -25,6 +25,7 @@ export default function TheShiftPage() {
   const heroTextRef = useRef(null)
   const loglineTextRef = useRef(null)
   const synopsisTextRef = useRef(null)
+  const mysteryTextRef = useRef(null)
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [isFading, setIsFading] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -932,7 +933,14 @@ export default function TheShiftPage() {
 
         <div className="flex h-screen relative">
           {/* Linke Hälfte - Text */}
-          <div className="relative w-1/2 h-full flex flex-col justify-center px-8 text-left">
+          <div 
+            ref={mysteryTextRef}
+            className="relative w-1/2 h-full flex flex-col justify-center text-left" 
+            style={{ 
+              paddingLeft: '6rem', 
+              paddingRight: '2rem',
+            }}
+          >
             <h2 
               className="text-white mb-8 animate-uneven-pulse text-left"
               style={{
