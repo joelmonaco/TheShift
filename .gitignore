@@ -48,3 +48,6 @@ public/_next-video
 
 /app/avatar/files/*
 /app/avatar/udo/train/files/*
+# Video files (too large for GitHub)
+*.mp4
+*.mov
