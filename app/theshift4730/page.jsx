@@ -1332,6 +1332,64 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
             className="object-contain"
             priority
           />
+          {/* Schwarzer Gradient am unteren Rand */}
+          <div 
+            className="absolute bottom-0 left-0 w-full pointer-events-none"
+            style={{
+              height: '40%',
+              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
+              zIndex: 1,
+            }}
+          />
+        </div>
+      </section>
+
+      {/* Zehnter Abschnitt - Development Status (über dem Bild) */}
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: '-20vh', zIndex: 20 }}>
+        <div className="relative w-full flex" style={{ paddingLeft: '6rem', paddingRight: '2rem' }}>
+          <div className="w-1/2">
+            <h2
+              className="text-white animate-uneven-pulse"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+                lineHeight: '1.2',
+                textShadow: '0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3)',
+              }}
+            >
+              DEVELOPMENT<br />STATUS
+            </h2>
+          </div>
+          <div className="w-1/2">
+            <ul 
+              className="text-white list-none"
+              style={{
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                fontWeight: 400,
+                lineHeight: '2',
+              }}
+            >
+              <li style={{ marginBottom: '0.5rem' }}>
+                <span style={{ marginRight: '0.75rem' }}>•</span>
+                Pilot episode shot (pre-post-production)
+              </li>
+              <li style={{ marginBottom: '0.5rem' }}>
+                <span style={{ marginRight: '0.75rem' }}>•</span>
+                Lead roles cast
+              </li>
+              <li style={{ marginBottom: '0.5rem' }}>
+                <span style={{ marginRight: '0.75rem' }}>•</span>
+                Episode arc for a entire first season
+              </li>
+              <li style={{ marginBottom: '0.5rem' }}>
+                <span style={{ marginRight: '0.75rem' }}>•</span>
+                Concept for additional seasons in anthology style
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
