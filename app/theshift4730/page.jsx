@@ -1177,7 +1177,7 @@ export default function TheShiftPage() {
       </section>
 
       {/* Siebter Abschnitt - Bilder Galerie */}
-      <section className="relative min-h-screen bg-black overflow-hidden py-16 px-8">
+      <section className="relative min-h-screen bg-black overflow-visible py-16 px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-4 gap-8">
             {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
@@ -1231,57 +1231,49 @@ export default function TheShiftPage() {
                 <source src="/Video_8.mov" type="video/mp4" />
                 Dein Browser unterstützt das Video-Tag nicht.
               </video>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Achter Abschnitt - Schreibmaschinen Text */}
-      <section className="relative min-h-screen bg-black overflow-hidden py-16 px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-4 gap-8">
-            {/* Weißes Blatt - so breit wie Video 8 (4 Spalten) */}
-            <div className="col-span-4 relative" style={{ height: '120vh' }}>
-              {/* Hintere Blätter (Stapel-Effekt) */}
-              <div 
-                className="absolute inset-0 bg-white"
-                style={{
-                  transform: 'translate(16px, 16px) rotate(5deg)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                  zIndex: 1,
-                }}
-              />
-              <div 
-                className="absolute inset-0 bg-white"
-                style={{
-                  transform: 'translate(8px, 8px) rotate(5deg)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
-                  zIndex: 2,
-                }}
-              />
-              {/* Vorderes Blatt */}
-              <div 
-                className="relative bg-white p-12 shadow-2xl"
-                style={{
-                  zIndex: 3,
-                  height: '100%',
-                  transform: 'rotate(5deg)',
-                }}
-              >
-              <div className="max-w-4xl mx-auto">
-                {/* Gesamter Text mit einem einzigen Cursor */}
+              
+              {/* Weißes Blatt - über Video 8 positioniert */}
+              <div className="absolute top-0 left-0 w-full" style={{ height: '120vh', transform: 'translateY(75vh)', zIndex: 10 }}>
+                {/* Hintere Blätter (Stapel-Effekt) */}
                 <div 
+                  className="absolute inset-0 bg-white"
                   style={{
-                    fontFamily: 'var(--font-courier-prime), monospace',
-                    fontSize: '0.9rem',
-                    lineHeight: '1.8',
-                    letterSpacing: '0.02em',
-                    whiteSpace: 'pre-wrap',
+                    transform: 'translate(16px, 16px) rotate(3deg)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    zIndex: 1,
+                  }}
+                />
+                <div 
+                  className="absolute inset-0 bg-white"
+                  style={{
+                    transform: 'translate(8px, 8px) rotate(3deg)',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+                    zIndex: 2,
+                  }}
+                />
+                {/* Vorderes Blatt */}
+                <div 
+                  className="relative bg-white p-12 shadow-2xl"
+                  style={{
+                    zIndex: 3,
+                    height: '100%',
+                    transform: 'rotate(3deg)',
                   }}
                 >
-                  <TextType 
-                    as="div"
-                    text={[`THE SHIFT
+                  <div className="max-w-4xl mx-auto">
+                    {/* Gesamter Text mit einem einzigen Cursor */}
+                    <div 
+                      className="typewriter-content"
+                      style={{
+                        fontFamily: 'var(--font-courier-prime), monospace',
+                        fontSize: '0.9rem',
+                        lineHeight: '1.8',
+                        letterSpacing: '0.02em',
+                      }}
+                    >
+                      <TextType 
+                        as="div"
+                        text={[`THE SHIFT
 
 Written by
 
@@ -1302,20 +1294,22 @@ ARZTHELFERIN (O.S.) (CONT'D)
 Wir können die Struktur noch nicht ganz beurteilen. Sie bekommen jetzt das Kontrastmittel. Eventuell fühlt es sich wieder etwas kalt an.
 
 Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicherten Blick der Arzthelferin hinter dem Computer.`]}
-                    typingSpeed={150}
-                    pauseDuration={0}
-                    showCursor={true}
-                    cursorCharacter="|"
-                    loop={false}
-                    className="typewriter-content"
-                  />
+                        typingSpeed={150}
+                        pauseDuration={0}
+                        showCursor={true}
+                        cursorCharacter="|"
+                        loop={false}
+                        className="typewriter-content"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Fade-to-Black Overlay */}
       {isFading && (
