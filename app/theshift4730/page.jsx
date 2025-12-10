@@ -1336,8 +1336,8 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
           <div 
             className="absolute bottom-0 left-0 w-full pointer-events-none"
             style={{
-              height: '40%',
-              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
+              height: '50%',
+              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%)',
               zIndex: 1,
             }}
           />
@@ -1390,6 +1390,47 @@ Das Surren der MRT-Röhre wird allmählich intensiver. Wir sehen den verunsicher
               </li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Elfter Abschnitt - Note of the Authors */}
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '80vh' }}>
+        <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
+          <Image
+            src="/Bilder/Bild_Breit_2.png"
+            alt="Bild Breit 2"
+            fill
+            className="object-contain"
+            priority
+          />
+          {/* Schwarzer Gradient am unteren Rand */}
+          <div 
+            className="absolute bottom-0 left-0 w-full pointer-events-none"
+            style={{
+              height: '40%',
+              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
+              zIndex: 1,
+            }}
+          />
+        </div>
+      </section>
+
+      {/* Zwölfter Abschnitt - Note of the Authors (über dem Bild) */}
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: '-40vh', zIndex: 20 }}>
+        <div className="relative w-full" style={{ paddingLeft: '6rem', paddingRight: '2rem' }}>
+          <h2
+            className="text-white animate-uneven-pulse"
+            style={{
+              fontFamily: 'var(--font-macbeth)',
+              fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2',
+              textShadow: '0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            NOTE OF<br />THE AUTHORS
+          </h2>
         </div>
       </section>
 
