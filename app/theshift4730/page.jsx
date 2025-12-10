@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 
 export default function TheShiftPage() {
   const videoRef = useRef(null)
@@ -22,6 +23,7 @@ export default function TheShiftPage() {
   const [isLastHalfSecond5, setIsLastHalfSecond5] = useState(false)
   const [shouldFlicker6, setShouldFlicker6] = useState(false)
   const [isLastHalfSecond6, setIsLastHalfSecond6] = useState(false)
+  const [hoveredImage, setHoveredImage] = useState(null)
   const [isHoveringHannah, setIsHoveringHannah] = useState(false)
   const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
   const [hasHovered, setHasHovered] = useState(false)
@@ -1167,6 +1169,66 @@ export default function TheShiftPage() {
               <br /><br />
               In contrast, The Shift presents a distorted, eerie version of reality: muted colors, uncanny stillness, and subtle surrealism.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Siebter Abschnitt - Bilder Galerie */}
+      <section className="relative min-h-screen bg-black overflow-hidden py-16 px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-4 gap-8">
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
+              <div
+                key={num}
+                className="relative group cursor-pointer"
+                onMouseEnter={() => setHoveredImage(num)}
+                onMouseLeave={() => setHoveredImage(null)}
+              >
+                <div className="relative w-full" style={{ aspectRatio: '1/1' }}>
+                  <Image
+                    src={`/Bilder/Bild_${num}.png`}
+                    alt={`Bild ${num}`}
+                    fill
+                    className="object-cover transition-all duration-500"
+                    style={{
+                      filter: hoveredImage === num ? 'grayscale(0%)' : 'grayscale(100%)',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+            
+            {/* Video 7 - so breit wie 4 Bilder, näher an die Bilder */}
+            <div className="relative col-span-4 -mt-4" style={{ aspectRatio: '16/9' }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+              >
+                <source src="/Video_7.mov" type="video/quicktime" />
+                <source src="/Video_7.mov" type="video/mp4" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+            </div>
+            
+            {/* Video 8 - so breit wie 4 Bilder, näher an Video 7 */}
+            <div className="relative col-span-4 -mt-8" style={{ aspectRatio: '16/9' }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+              >
+                <source src="/Video_8.mov" type="video/quicktime" />
+                <source src="/Video_8.mov" type="video/mp4" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+            </div>
           </div>
         </div>
       </section>
