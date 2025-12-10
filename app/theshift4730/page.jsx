@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import TextType from '@/components/TextType'
 
 export default function TheShiftPage() {
   const videoRef = useRef(null)
@@ -25,6 +26,8 @@ export default function TheShiftPage() {
   const [isLastHalfSecond6, setIsLastHalfSecond6] = useState(false)
   const [hoveredImage, setHoveredImage] = useState(null)
   const [isHoveringHannah, setIsHoveringHannah] = useState(false)
+  const [typewriterText, setTypewriterText] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
   const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
   const [hasHovered, setHasHovered] = useState(false)
   const [scrollY, setScrollY] = useState(0)
@@ -1228,6 +1231,98 @@ export default function TheShiftPage() {
                 <source src="/Video_8.mov" type="video/mp4" />
                 Dein Browser unterstützt das Video-Tag nicht.
               </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Achter Abschnitt - Schreibmaschinen Text */}
+      <section className="relative min-h-screen bg-black overflow-hidden py-16 px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-4 gap-8">
+            {/* Weißes Blatt - so breit wie Video 8 (4 Spalten) */}
+            <div className="col-span-4 relative" style={{ minHeight: '80vh' }}>
+              {/* Hintere Blätter (Stapel-Effekt) */}
+              <div 
+                className="absolute inset-0 bg-white"
+                style={{
+                  transform: 'translate(16px, 16px)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  zIndex: 1,
+                }}
+              />
+              <div 
+                className="absolute inset-0 bg-white"
+                style={{
+                  transform: 'translate(8px, 8px)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+                  zIndex: 2,
+                }}
+              />
+              {/* Vorderes Blatt */}
+              <div 
+                className="relative bg-white p-12 shadow-2xl"
+                style={{
+                  zIndex: 3,
+                  minHeight: '80vh',
+                }}
+              >
+              <div className="max-w-4xl mx-auto">
+                {/* Gesamter Text mit einem einzigen Cursor */}
+                <div 
+                  style={{
+                    fontFamily: "'Special Elite', monospace",
+                    fontSize: '0.9rem',
+                    lineHeight: '1.8',
+                    letterSpacing: '0.02em',
+                    whiteSpace: 'pre-wrap',
+                  }}
+                >
+                  <TextType 
+                    as="div"
+                    text={[`THE SHIFT
+
+Written by
+
+Eleftherios Bethmage & Joel Monaco
+
+Episode One - Erwachen
+
+EXT. WALDLICHTUNG - MORGEN 1
+
+Tau liegt schwer auf der sattgrünen Wiese. Langsam läuft ein
+einzelnes Reh auf die Lichtung, sein Fell golden gestreichelt
+von den ersten Sonnenstrahlen. Die Welt ist still – nur
+entferntes Vogelgezwitscher dringt aus dem Dickicht.
+Das Reh zupft ruhig an einem Grashalm.
+
+ARZTHELFERIN (O.S.)
+Es tut uns leid, Frau Kessler, aber
+wir müssen die Aufnahme
+wiederholen.
+
+Ein mechanisches SURREN setzt ein - ein motorisierter
+Schlitten gleitet in eine MRT-Röhre und rastet ein.
+
+ARZTHELFERIN (O.S.) (CONT'D)
+Wir können die Struktur noch nicht
+ganz beurteilen. Sie bekommen jetzt
+das Kontrastmittel. Eventuell fühlt
+es sich wieder etwas kalt an.
+
+Das Surren der MRT-Röhre wird allmählich intensiver. Wir
+sehen den verunsicherten Blick der Arzthelferin hinter dem
+Computer.`]}
+                    typingSpeed={150}
+                    pauseDuration={0}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    loop={false}
+                    className="typewriter-content"
+                  />
+                </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>

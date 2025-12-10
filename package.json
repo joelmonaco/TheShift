@@ -77,7 +77,7 @@
     "formidable": "^3.5.1",
     "framer-motion": "^12.4.10",
     "googleapis": "^159.0.0",
-    "gsap": "^3.12.7",
+    "gsap": "^3.14.1",
     "ics": "^3.7.6",
     "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.2",

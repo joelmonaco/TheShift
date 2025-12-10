@@ -1,0 +1,29 @@
+.text-type {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.text-type__content {
+  display: block;
+}
+
+.typewriter-content .text-type__content {
+  text-align: center;
+}
+
+.typewriter-content .text-type__content::after {
+  content: '';
+  display: block;
+  text-align: left;
+}
+
+.text-type__cursor {
+  margin-left: 0.25rem;
+  display: inline-block;
+  opacity: 1;
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}
+
