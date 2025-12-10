@@ -588,8 +588,30 @@ export default function TheShiftPage() {
         </div>
       </section>
 
+      {/* CHARACTERS Banner */}
+      <div className="relative w-full bg-black flex items-center justify-center" style={{ minHeight: '30vh', marginTop: '20vh' }}>
+        <h2 
+          className="text-white text-center animate-uneven-pulse"
+          style={{
+            fontFamily: 'var(--font-macbeth)',
+            fontSize: 'clamp(6rem, 20vw, 12rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          CHARACTERS
+        </h2>
+      </div>
+
       {/* Vierter Abschnitt - Characters */}
       <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Gradient Verlauf zu schwarz oben */}
+        <div 
+          className="absolute top-0 left-0 w-full h-32 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
         <div className="flex h-screen">
           {/* Linke Seite - Hannah */}
           <div 
