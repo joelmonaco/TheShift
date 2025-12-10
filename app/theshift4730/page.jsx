@@ -589,7 +589,7 @@ export default function TheShiftPage() {
       </section>
 
       {/* CHARACTERS Banner */}
-      <div className="relative w-full bg-black flex items-center justify-center" style={{ minHeight: '30vh', marginTop: '20vh' }}>
+      <div className="relative w-full bg-black flex flex-col items-center justify-center" style={{ minHeight: '30vh', marginTop: '20vh' }}>
         <h2 
           className="text-white text-center animate-uneven-pulse"
           style={{
@@ -601,6 +601,18 @@ export default function TheShiftPage() {
         >
           CHARACTERS
         </h2>
+        <p 
+          className="text-white text-center mt-4"
+          style={{
+            fontFamily: 'var(--font-macbeth)',
+            fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
+            opacity: 0.8,
+          }}
+        >
+          THE KESSLER SISTERS
+        </p>
       </div>
 
       {/* Vierter Abschnitt - Characters */}
@@ -654,12 +666,15 @@ export default function TheShiftPage() {
             {/* Content */}
             <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
               <h2 
-                className="text-white mb-8 animate-uneven-pulse"
+                className={`text-white mb-8 animate-uneven-pulse transition-all duration-500 ${
+                  isHoveringHannah ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
                 style={{
                   fontFamily: 'var(--font-macbeth)',
                   fontSize: 'clamp(2rem, 5vw, 4rem)',
                   fontWeight: 400,
                   letterSpacing: '-0.02em',
+                  pointerEvents: isHoveringHannah ? 'auto' : 'none',
                 }}
               >
                 HANNAH KESSLER
@@ -733,12 +748,15 @@ export default function TheShiftPage() {
             {/* Content */}
             <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
               <h2 
-                className="text-white mb-8 animate-uneven-pulse"
+                className={`text-white mb-8 animate-uneven-pulse transition-all duration-500 ${
+                  isHoveringEmilia ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
                 style={{
                   fontFamily: 'var(--font-macbeth)',
                   fontSize: 'clamp(2rem, 5vw, 4rem)',
                   fontWeight: 400,
                   letterSpacing: '-0.02em',
+                  pointerEvents: isHoveringEmilia ? 'auto' : 'none',
                 }}
               >
                 EMILIA KESSLER
