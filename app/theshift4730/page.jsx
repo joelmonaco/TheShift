@@ -10,10 +10,14 @@ export default function TheShiftPage() {
   const container2Ref = useRef(null)
   const video3Ref = useRef(null)
   const video4Ref = useRef(null)
+  const video5Ref = useRef(null)
+  const container5Ref = useRef(null)
   const [shouldFlicker, setShouldFlicker] = useState(true)
   const [isLastHalfSecond, setIsLastHalfSecond] = useState(false)
   const [shouldFlicker2, setShouldFlicker2] = useState(true)
   const [isLastHalfSecond2, setIsLastHalfSecond2] = useState(false)
+  const [shouldFlicker5, setShouldFlicker5] = useState(false)
+  const [isLastHalfSecond5, setIsLastHalfSecond5] = useState(false)
   const [isHoveringHannah, setIsHoveringHannah] = useState(false)
   const [isHoveringEmilia, setIsHoveringEmilia] = useState(false)
   const [hasHovered, setHasHovered] = useState(false)
@@ -163,6 +167,92 @@ export default function TheShiftPage() {
       
       return () => {
         video.removeEventListener('timeupdate', handleTimeUpdate)
+      }
+    }
+  }, [])
+
+  // Video 5 Flackern-Effekt (wie Video 1 und 2)
+  useEffect(() => {
+    const video = video5Ref.current
+    const container = container5Ref.current
+    if (video && container) {
+      let lastTime = 0
+      let isNearEnd = false
+      
+      const triggerFlicker = () => {
+        if (container) {
+          container.classList.remove('animate-flicker-start')
+          void container.offsetWidth // Trigger reflow
+          setTimeout(() => {
+            container.classList.add('animate-flicker-start')
+            setShouldFlicker5(true)
+            setTimeout(() => {
+              setShouldFlicker5(false)
+            }, 2000)
+          }, 10)
+        }
+      }
+      
+      // Intersection Observer für erstes Erscheinen
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+              // Section ist sichtbar geworden - Flackern triggern
+              triggerFlicker()
+              observer.disconnect() // Nur einmal triggern
+            }
+          })
+        },
+        { threshold: 0.1 }
+      )
+      
+      if (container) {
+        observer.observe(container)
+      }
+      
+      // Event Listener für Video-Loop
+      const handleTimeUpdate = () => {
+        const currentTime = video.currentTime
+        const duration = video.duration
+        
+        if (duration > 0) {
+          const timeUntilEnd = duration - currentTime
+          
+          // Prüfe ob Video in der letzten halben Sekunde ist - dann komplett schwarz
+          if (timeUntilEnd <= 0.5 && timeUntilEnd > 0) {
+            setIsLastHalfSecond5(true)
+          } else {
+            setIsLastHalfSecond5(false)
+          }
+          
+          // Prüfe ob Video in der letzten Sekunde ist - dann flackern (aber nicht in der letzten halben Sekunde)
+          if (timeUntilEnd <= 1 && timeUntilEnd > 0.5 && !isNearEnd) {
+            isNearEnd = true
+            triggerFlicker()
+          }
+          
+          // Wenn Video zurückgesprungen ist (Loop hat neu gestartet)
+          if (isNearEnd && currentTime < 0.5 && lastTime > duration * 0.9) {
+            isNearEnd = false
+            setIsLastHalfSecond5(false)
+            triggerFlicker()
+          }
+        }
+        
+        lastTime = currentTime
+      }
+      
+      video.addEventListener('timeupdate', handleTimeUpdate)
+      video.addEventListener('canplay', () => {
+        video.play().catch(err => {
+          console.error('Video 5 Autoplay-Fehler:', err)
+        })
+      })
+      
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate)
+        observer.disconnect()
       }
     }
   }, [])
@@ -818,6 +908,92 @@ export default function TheShiftPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fünfter Abschnitt - The Mystery of The Shift */}
+      <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Gradient Verlauf zu schwarz oben */}
+        <div 
+          className="absolute top-0 left-0 w-full h-32 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        {/* Gradient Verlauf zu schwarz unten */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-96 pointer-events-none z-15"
+          style={{
+            background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
+
+        <div className="flex h-screen relative">
+          {/* Linke Hälfte - Text */}
+          <div className="relative w-1/2 h-full flex flex-col justify-center px-8 text-left">
+            <h2 
+              className="text-white mb-8 animate-uneven-pulse text-left"
+              style={{
+                fontFamily: 'var(--font-macbeth)',
+                fontSize: 'clamp(2rem, 5vw, 4rem)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              THE MYSTERY<br />OF THE SHIFT
+            </h2>
+            
+            <div className="max-w-2xl">
+              <p 
+                className="text-white text-base md:text-lg leading-relaxed"
+                style={{
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontWeight: 400,
+                  lineHeight: '1.8',
+                }}
+              >
+                The Shift is a supernatural, distorted reflection of reality—a parallel dimension where a person&apos;s deepest fears and hidden traumas physically manifest. It cannot be entered by choice; it pulls people in when their inner world begins to collapse.
+                <br /><br />
+                Fueled by raw emotion, The Shift grows stronger with fear and pain, twisting memories and playing with its victims like a predator. Though it feels like a nightmare, everything that happens inside it has real and often devastating consequences in the real world.
+              </p>
+            </div>
+          </div>
+
+          {/* Rechte Hälfte - Video */}
+          <div className="relative w-1/2 h-full overflow-hidden">
+            {/* Video Hintergrund mit Flackern */}
+            <div 
+              ref={container5Ref}
+              className={`absolute top-0 left-0 w-full h-full z-0 ${shouldFlicker5 ? 'animate-flicker-start' : ''}`}
+            >
+              <video
+                ref={video5Ref}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+                style={{
+                  opacity: isLastHalfSecond5 ? 0 : 1,
+                  transition: 'opacity 0.1s ease-out',
+                }}
+              >
+                <source src="/Video_5.mov" type="video/quicktime" />
+                <source src="/Video_5.mov" type="video/mp4" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+            </div>
+            
+            {/* Gradient Verlauf zu schwarz links (zur Mitte hin) */}
+            <div 
+              className="absolute top-0 left-0 w-full h-full pointer-events-none z-10"
+              style={{
+                background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%)',
+              }}
+            ></div>
           </div>
         </div>
       </section>
