@@ -43,6 +43,7 @@ export default function TheShiftPage() {
   const controlsTimeoutRef = useRef(null)
   const [isLandscape, setIsLandscape] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
@@ -369,8 +370,11 @@ export default function TheShiftPage() {
   // Bildschirmausrichtung überwachen (für Mobile Video)
   useEffect(() => {
     const checkOrientation = () => {
-      const mobile = window.innerWidth < 768
+      const width = window.innerWidth
+      const mobile = width < 768
+      const tablet = width >= 768 && width < 1024
       setIsMobile(mobile)
+      setIsTablet(tablet)
       if (mobile) {
         setIsLandscape(window.innerHeight < window.innerWidth)
       } else {
@@ -1353,7 +1357,7 @@ export default function TheShiftPage() {
             style={{
               opacity: isLastHalfSecond6 ? 0 : 1,
               transition: 'opacity 0.1s ease-out',
-              objectPosition: isMobile ? 'right center' : 'center center',
+              objectPosition: (isMobile || isTablet) ? 'right center' : 'center center',
             }}
           >
             <source src="/Video_6.mov" type="video/quicktime" />
