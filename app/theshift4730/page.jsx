@@ -1005,10 +1005,10 @@ export default function TheShiftPage() {
             background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0) 100%)',
           }}
         ></div>
-        <div className="flex h-screen relative">
-          {/* HOVER HERE Text - nur sichtbar wenn noch nicht gehovert wurde */}
+        <div className="flex flex-col md:flex-row min-h-screen md:h-screen relative">
+          {/* HOVER HERE Text - nur sichtbar wenn noch nicht gehovert wurde, nicht auf Mobile */}
           {!hasHovered && (
-            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+            <div className="absolute inset-0 hidden md:flex items-center justify-center z-30 pointer-events-none">
               <p 
                 className="text-white text-center animate-uneven-pulse"
                 style={{
@@ -1028,18 +1028,40 @@ export default function TheShiftPage() {
           
           {/* Linke Seite - Hannah */}
           <div 
-            className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
+            className="relative w-full md:w-1/2 h-[100vh] md:h-full overflow-hidden cursor-pointer group"
             onMouseEnter={() => {
-              setIsHoveringHannah(true)
-              setHasHovered(true)
-              if (video3Ref.current) {
-                video3Ref.current.play().catch(err => console.error('Video play error:', err))
+              if (!isMobile) {
+                setIsHoveringHannah(true)
+                setHasHovered(true)
+                if (video3Ref.current) {
+                  video3Ref.current.play().catch(err => console.error('Video play error:', err))
+                }
               }
             }}
             onMouseLeave={() => {
-              setIsHoveringHannah(false)
-              if (video3Ref.current) {
-                video3Ref.current.pause()
+              if (!isMobile) {
+                setIsHoveringHannah(false)
+                if (video3Ref.current) {
+                  video3Ref.current.pause()
+                }
+              }
+            }}
+            onClick={() => {
+              if (isMobile) {
+                const newState = !isHoveringHannah
+                setIsHoveringHannah(newState)
+                setIsHoveringEmilia(false) // Schließe den anderen Bereich
+                setHasHovered(true)
+                if (video3Ref.current) {
+                  if (newState) {
+                    video3Ref.current.play().catch(err => console.error('Video play error:', err))
+                  } else {
+                    video3Ref.current.pause()
+                  }
+                }
+                if (video4Ref.current) {
+                  video4Ref.current.pause()
+                }
               }
             }}
           >
@@ -1066,7 +1088,7 @@ export default function TheShiftPage() {
             <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-10"></div>
 
             {/* Content */}
-            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
+            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center py-8 md:py-0">
               <h2 
                 className={`text-white mb-8 animate-uneven-pulse transition-all duration-500 ${
                   isHoveringHannah ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -1082,7 +1104,7 @@ export default function TheShiftPage() {
                 HANNAH KESSLER
               </h2>
               
-              {/* Text - erscheint beim Hover */}
+              {/* Text - erscheint beim Hover (Desktop) oder beim Klick (Mobile) */}
               <div 
                 className={`max-w-2xl mx-auto transition-all duration-500 ${
                   isHoveringHannah ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -1111,18 +1133,40 @@ export default function TheShiftPage() {
 
           {/* Rechte Seite - Emilia */}
           <div 
-            className="relative w-1/2 h-full overflow-hidden cursor-pointer group"
+            className="relative w-full md:w-1/2 h-[100vh] md:h-full overflow-hidden cursor-pointer group"
             onMouseEnter={() => {
-              setIsHoveringEmilia(true)
-              setHasHovered(true)
-              if (video4Ref.current) {
-                video4Ref.current.play().catch(err => console.error('Video play error:', err))
+              if (!isMobile) {
+                setIsHoveringEmilia(true)
+                setHasHovered(true)
+                if (video4Ref.current) {
+                  video4Ref.current.play().catch(err => console.error('Video play error:', err))
+                }
               }
             }}
             onMouseLeave={() => {
-              setIsHoveringEmilia(false)
-              if (video4Ref.current) {
-                video4Ref.current.pause()
+              if (!isMobile) {
+                setIsHoveringEmilia(false)
+                if (video4Ref.current) {
+                  video4Ref.current.pause()
+                }
+              }
+            }}
+            onClick={() => {
+              if (isMobile) {
+                const newState = !isHoveringEmilia
+                setIsHoveringEmilia(newState)
+                setIsHoveringHannah(false) // Schließe den anderen Bereich
+                setHasHovered(true)
+                if (video4Ref.current) {
+                  if (newState) {
+                    video4Ref.current.play().catch(err => console.error('Video play error:', err))
+                  } else {
+                    video4Ref.current.pause()
+                  }
+                }
+                if (video3Ref.current) {
+                  video3Ref.current.pause()
+                }
               }
             }}
           >
@@ -1149,7 +1193,7 @@ export default function TheShiftPage() {
             <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-10"></div>
 
             {/* Content */}
-            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center">
+            <div className="relative z-20 h-full flex flex-col items-center justify-center px-8 text-center py-8 md:py-0">
               <h2 
                 className={`text-white mb-8 animate-uneven-pulse transition-all duration-500 ${
                   isHoveringEmilia ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -1165,7 +1209,7 @@ export default function TheShiftPage() {
                 EMILIA KESSLER
               </h2>
               
-              {/* Text - erscheint beim Hover */}
+              {/* Text - erscheint beim Hover (Desktop) oder beim Klick (Mobile) */}
               <div 
                 className={`max-w-2xl mx-auto transition-all duration-500 ${
                   isHoveringEmilia ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
