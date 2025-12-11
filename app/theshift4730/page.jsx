@@ -1578,29 +1578,32 @@ MORE`]}
       </section>
 
       {/* Neunter Abschnitt - Breites Bild (unter den Blättern) */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '80vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '20vh' : '80vh' }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
-          <Image
-            src="/Bilder/Bild_Breit_1.png"
-            alt="Bild Breit 1"
-            fill
-            className="object-contain"
-            priority
-          />
-          {/* Schwarzer Gradient am unteren Rand */}
-          <div 
-            className="absolute bottom-0 left-0 w-full pointer-events-none"
-            style={{
-              height: '50%',
-              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%)',
-              zIndex: 1,
-            }}
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src="/Bilder/Bild_Breit_1.png"
+              alt="Bild Breit 1"
+              fill
+              className="object-contain"
+              priority
+              style={{ zIndex: 1 }}
+            />
+            {/* Schwarzer Gradient am unteren Rand - über dem Bild (nur Mobile) */}
+            <div 
+              className="absolute bottom-0 left-0 w-full pointer-events-none md:hidden"
+              style={{
+                height: '30%',
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 30%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0) 100%)',
+                zIndex: 20,
+              }}
+            />
+          </div>
         </div>
       </section>
 
       {/* Zehnter Abschnitt - Development Status (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: '-20vh', zIndex: 20 }}>
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-5vh' : '-20vh', zIndex: 20 }}>
         <div className="relative w-full flex" style={{ paddingLeft: '6rem', paddingRight: '2rem' }}>
           <div className="w-1/2">
             <h2
@@ -1649,7 +1652,7 @@ MORE`]}
       </section>
 
       {/* Elfter Abschnitt - Note of the Authors */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: '20vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '5vh' : '20vh' }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
           <Image
             src="/Bilder/Bild_Breit_2.png"
@@ -1671,7 +1674,7 @@ MORE`]}
       </section>
 
       {/* Zwölfter Abschnitt - Note of the Authors (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: '-40vh', zIndex: 20 }}>
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-10vh' : '-40vh', zIndex: 20 }}>
         <div className="relative w-full flex flex-col justify-center items-center" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
           <h2
             className="text-white animate-uneven-pulse text-center mb-8"
