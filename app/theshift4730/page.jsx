@@ -41,6 +41,8 @@ export default function TheShiftPage() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [showControls, setShowControls] = useState(true)
   const controlsTimeoutRef = useRef(null)
+  const [isLandscape, setIsLandscape] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
@@ -362,6 +364,28 @@ export default function TheShiftPage() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Bildschirmausrichtung überwachen (für Mobile Video)
+  useEffect(() => {
+    const checkOrientation = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (mobile) {
+        setIsLandscape(window.innerHeight < window.innerWidth)
+      } else {
+        setIsLandscape(true) // Desktop immer als Landscape behandeln
+      }
+    }
+
+    checkOrientation()
+    window.addEventListener('resize', checkOrientation)
+    window.addEventListener('orientationchange', checkOrientation)
+
+    return () => {
+      window.removeEventListener('resize', checkOrientation)
+      window.removeEventListener('orientationchange', checkOrientation)
+    }
   }, [])
 
   // Handler für Watch Teaser Button
@@ -943,7 +967,7 @@ export default function TheShiftPage() {
           className="text-white text-center animate-uneven-pulse"
           style={{
             fontFamily: 'var(--font-macbeth)',
-            fontSize: 'clamp(6rem, 20vw, 12rem)',
+            fontSize: 'clamp(0.75rem, 14vw, 12rem)',
             fontWeight: 400,
             letterSpacing: '-0.02em',
           }}
@@ -954,7 +978,7 @@ export default function TheShiftPage() {
           className="text-white text-center mt-4"
           style={{
             fontFamily: 'var(--font-macbeth)',
-            fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
+            fontSize: 'clamp(1.125rem, 2vw, 1.25rem)',
             fontWeight: 400,
             letterSpacing: '-0.02em',
             opacity: 0.8,
@@ -1802,10 +1826,47 @@ MORE`]}
             </svg>
           </button>
 
+          {/* Hinweis zum Drehen auf Mobile (nur im Portrait-Modus) */}
+          {!isLandscape && isMobile && (
+            <div 
+              className="absolute inset-0 z-[103] bg-black/90 flex flex-col items-center justify-center md:hidden"
+              style={{
+                pointerEvents: 'auto',
+              }}
+            >
+              <div className="text-center px-8">
+                <svg 
+                  width="64" 
+                  height="64" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                  className="text-white mx-auto mb-4 animate-spin"
+                  style={{ animationDuration: '2s' }}
+                >
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                </svg>
+                <p 
+                  className="text-white text-lg font-medium mb-2"
+                  style={{
+                    fontFamily: 'var(--font-playfair-display), serif',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Bitte drehen Sie Ihr Gerät
+                </p>
+                <p className="text-white text-sm opacity-80">
+                  Für die beste Wiedergabe im Querformat
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Video */}
           <video
             ref={introVideoRef}
-            className="w-full h-full object-contain"
+            className={`w-full h-full ${isLandscape || !isMobile ? 'object-contain' : 'object-cover'}`}
             controls={false}
             playsInline
             volume={1.0}
