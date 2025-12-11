@@ -1416,7 +1416,7 @@ export default function TheShiftPage() {
       {/* Siebter Abschnitt - Bilder Galerie */}
       <section className="relative min-h-screen bg-black overflow-visible py-16 px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
               <div
                 key={num}
@@ -1439,7 +1439,7 @@ export default function TheShiftPage() {
             ))}
             
             {/* Video 7 - so breit wie 4 Bilder, näher an die Bilder */}
-            <div className="relative col-span-2 md:col-span-4 -mt-4" style={{ aspectRatio: '16/9' }}>
+            <div className="relative col-span-2 md:col-span-3 lg:col-span-4 -mt-4" style={{ aspectRatio: '16/9' }}>
               <video
                 autoPlay
                 loop
@@ -1455,7 +1455,7 @@ export default function TheShiftPage() {
             </div>
             
             {/* Video 8 - so breit wie 4 Bilder, näher an Video 7 */}
-            <div className="relative col-span-2 md:col-span-4 -mt-8" style={{ aspectRatio: '16/9' }}>
+            <div className="relative col-span-2 md:col-span-3 lg:col-span-4 -mt-8" style={{ aspectRatio: '16/9' }}>
               <video
                 autoPlay
                 loop
