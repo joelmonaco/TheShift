@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import Image from 'next/image'
 import TextType from '@/components/TextType'
 
@@ -1466,7 +1466,14 @@ export default function TheShiftPage() {
               </video>
               
               {/* Weißes Blatt - über Video 8 positioniert */}
-              <div className="absolute top-0 left-0 w-full" style={{ height: '120vh', transform: 'translateY(75vh)', zIndex: 10 }}>
+              <div 
+                className="absolute top-0 left-0 w-full" 
+                style={{ 
+                  height: isMobile ? '70vh' : '120vh', 
+                  transform: isMobile ? 'translateY(20vh)' : 'translateY(75vh)', 
+                  zIndex: 10 
+                }}
+              >
                 {/* Weicher Schatten hinter den Blättern */}
                 <div 
                   className="absolute inset-0"
@@ -1511,14 +1518,27 @@ export default function TheShiftPage() {
                       className="typewriter-content"
                       style={{
                         fontFamily: 'var(--font-courier-prime), monospace',
-                        fontSize: '0.9rem',
+                        fontSize: isMobile ? '0.5rem' : '0.9rem',
                         lineHeight: '1.8',
                         letterSpacing: '0.02em',
                       }}
                     >
                       <TextType 
+                        key={isMobile ? 'mobile' : 'desktop'}
                         as="div"
-                        text={[`THE SHIFT
+                        text={[isMobile ? `THE SHIFT
+
+Written by
+
+Eleftherios Bethmage & Joel Monaco
+
+Episode One - Erwachen
+
+EXT. WALDLICHTUNG - MORGEN 1
+
+Tau liegt schwer auf der sattgrünen Wiese. Langsam läuft ein einzelnes Reh auf die Lichtung, sein Fell golden gestreichelt
+
+MORE` : `THE SHIFT
 
 Written by
 
