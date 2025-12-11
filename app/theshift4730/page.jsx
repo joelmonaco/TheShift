@@ -1583,7 +1583,7 @@ MORE`]}
       </section>
 
       {/* Neunter Abschnitt - Breites Bild (unter den Blättern) */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '20vh' : '80vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '20vh' : (isTablet ? '30vh' : '80vh') }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
           {/* Bild Container */}
           <div className="absolute inset-0" style={{ zIndex: 1 }}>
@@ -1608,7 +1608,7 @@ MORE`]}
       </section>
 
       {/* Zehnter Abschnitt - Development Status (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : '-20vh', zIndex: 20 }}>
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : (isTablet ? '-38vh' : '-20vh'), zIndex: 20 }}>
         <div className="relative w-full flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start" style={{ paddingLeft: isMobile ? '2rem' : '6rem', paddingRight: isMobile ? '2rem' : '2rem', gap: isMobile ? '2rem' : '0' }}>
           <div className={isMobile ? "w-full text-center" : "w-1/2"}>
             <h2
@@ -1657,7 +1657,7 @@ MORE`]}
       </section>
 
       {/* Elfter Abschnitt - Note of the Authors */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '-20vh' : '20vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '-20vh' : (isTablet ? '-20vh' : '20vh') }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
           <Image
             src="/Bilder/Bild_Breit_2.png"
@@ -1679,7 +1679,7 @@ MORE`]}
       </section>
 
       {/* Zwölfter Abschnitt - Note of the Authors (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : '-40vh', zIndex: 20 }}>
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : (isTablet ? '-55vh' : '-40vh'), zIndex: 20 }}>
         <div className="relative w-full flex flex-col justify-center items-center" style={{ paddingLeft: isMobile ? '1rem' : '6rem', paddingRight: isMobile ? '1rem' : '6rem' }}>
           <h2
             className="text-white animate-uneven-pulse text-center mb-8"
