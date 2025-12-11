@@ -1580,32 +1580,32 @@ MORE`]}
       {/* Neunter Abschnitt - Breites Bild (unter den Blättern) */}
       <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '20vh' : '80vh' }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
-          <div className="relative w-full h-full">
+          {/* Bild Container */}
+          <div className="absolute inset-0" style={{ zIndex: 1 }}>
             <Image
               src="/Bilder/Bild_Breit_1.png"
               alt="Bild Breit 1"
               fill
               className="object-contain"
               priority
-              style={{ zIndex: 1 }}
-            />
-            {/* Schwarzer Gradient am unteren Rand - über dem Bild (nur Mobile) */}
-            <div 
-              className="absolute bottom-0 left-0 w-full pointer-events-none md:hidden"
-              style={{
-                height: '30%',
-                background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 30%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0) 100%)',
-                zIndex: 20,
-              }}
             />
           </div>
         </div>
+        {/* Schwarzer Gradient am unteren Rand - über dem Bild (nur Mobile) - außerhalb des inneren Containers */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 pointer-events-none md:hidden"
+          style={{
+            height: '50%',
+            background: 'linear-gradient(to top, #000000 0%, #000000 20%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.1) 90%, transparent 100%)',
+            zIndex: 15,
+          }}
+        />
       </section>
 
       {/* Zehnter Abschnitt - Development Status (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-5vh' : '-20vh', zIndex: 20 }}>
-        <div className="relative w-full flex" style={{ paddingLeft: '6rem', paddingRight: '2rem' }}>
-          <div className="w-1/2">
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : '-20vh', zIndex: 20 }}>
+        <div className="relative w-full flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start" style={{ paddingLeft: isMobile ? '2rem' : '6rem', paddingRight: isMobile ? '2rem' : '2rem', gap: isMobile ? '2rem' : '0' }}>
+          <div className={isMobile ? "w-full text-center" : "w-1/2"}>
             <h2
               className="text-white animate-uneven-pulse"
               style={{
@@ -1620,7 +1620,7 @@ MORE`]}
               DEVELOPMENT<br />STATUS
             </h2>
           </div>
-          <div className="w-1/2">
+          <div className={isMobile ? "w-full text-center" : "w-1/2"}>
             <ul 
               className="text-white list-none"
               style={{
@@ -1652,7 +1652,7 @@ MORE`]}
       </section>
 
       {/* Elfter Abschnitt - Note of the Authors */}
-      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '5vh' : '20vh' }}>
+      <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '-20vh' : '20vh' }}>
         <div className="relative w-full" style={{ height: '100vh', width: '100%' }}>
           <Image
             src="/Bilder/Bild_Breit_2.png"
@@ -1674,8 +1674,8 @@ MORE`]}
       </section>
 
       {/* Zwölfter Abschnitt - Note of the Authors (über dem Bild) */}
-      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-10vh' : '-40vh', zIndex: 20 }}>
-        <div className="relative w-full flex flex-col justify-center items-center" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
+      <section className="relative w-full bg-transparent overflow-visible" style={{ marginTop: isMobile ? '-40vh' : '-40vh', zIndex: 20 }}>
+        <div className="relative w-full flex flex-col justify-center items-center" style={{ paddingLeft: isMobile ? '1rem' : '6rem', paddingRight: isMobile ? '1rem' : '6rem' }}>
           <h2
             className="text-white animate-uneven-pulse text-center mb-8"
             style={{
@@ -1690,13 +1690,14 @@ MORE`]}
             NOTE OF THE AUTHORS
           </h2>
           <p
-            className="text-white text-center max-w-6xl"
+            className="text-white text-center"
             style={{
               fontFamily: 'system-ui, -apple-system, sans-serif',
               fontSize: 'clamp(1rem, 2vw, 1.25rem)',
               fontWeight: 400,
               lineHeight: '1.8',
               letterSpacing: '0.01em',
+              maxWidth: isMobile ? '100%' : '72rem',
             }}
           >
             The Shift explores fear, trauma, and psychological struggle by shaping them into physical, liminal spaces the audience can feel. Inspired by classic indie horror like <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>Halloween</span> and <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>The Evil Dead</span>, we value the creativity born from limitations and bold, timeless storytelling. At the same time, we&apos;re drawn to the warmth and nostalgia of small-town &quot;everyman&quot; stories that echo our own childhood memories. The Shift blends these worlds into a haunting mix of psychological horror and intimate nostalgia—set in a place anyone can recognize.
@@ -1705,7 +1706,7 @@ MORE`]}
       </section>
 
       {/* Dreizehnter Abschnitt - Quote */}
-      <section className="relative min-h-screen bg-black overflow-hidden" style={{ marginTop: '20vh' }}>
+      <section className="relative min-h-screen bg-black overflow-hidden" style={{ marginTop: isMobile ? '-20vh' : '20vh' }}>
         {/* Video Hintergrund */}
         <video
           autoPlay
