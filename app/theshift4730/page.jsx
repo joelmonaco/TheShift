@@ -483,7 +483,7 @@ export default function TheShiftPage() {
         {/* Video Container mit Gradients */}
       <div 
         ref={containerRef}
-        className={`absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 z-0 ${shouldFlicker ? 'animate-flicker-start' : ''}`}
+        className={`absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-3/4 h-3/4 z-0 ${shouldFlicker ? 'animate-flicker-start' : ''}`}
       >
         <video
           ref={videoRef}
@@ -518,16 +518,16 @@ export default function TheShiftPage() {
             background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0) 100%)',
           }}
         ></div>
-        {/* Links */}
+        {/* Links - nur Desktop */}
         <div 
-          className="absolute top-0 left-0 w-64 h-full pointer-events-none"
+          className="absolute top-0 left-0 w-64 h-full pointer-events-none hidden md:block"
           style={{
             background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0) 100%)',
           }}
         ></div>
-        {/* Rechts */}
+        {/* Rechts - nur Desktop */}
         <div 
-          className="absolute top-0 right-0 w-64 h-full pointer-events-none"
+          className="absolute top-0 right-0 w-64 h-full pointer-events-none hidden md:block"
           style={{
             background: 'linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0) 100%)',
           }}
@@ -547,7 +547,7 @@ export default function TheShiftPage() {
           className="text-white text-center animate-uneven-pulse"
           style={{
             fontFamily: 'var(--font-macbeth)',
-            fontSize: 'clamp(4rem, 15vw, 8rem)',
+            fontSize: 'clamp(5rem, 15vw, 8rem)',
             fontWeight: 400,
             letterSpacing: '-0.02em',
           }}
@@ -558,7 +558,7 @@ export default function TheShiftPage() {
           className="text-white text-center"
           style={{
             fontFamily: 'var(--font-macbeth)',
-            fontSize: 'clamp(0.75rem, 2vw, 1rem)',
+            fontSize: 'clamp(1rem, 2vw, 1rem)',
             fontWeight: 400,
             letterSpacing: '-0.02em',
             opacity: 0.8,
@@ -571,7 +571,7 @@ export default function TheShiftPage() {
 
       {/* Explore mit Pfeil - Ganz unten in Hero Section */}
       <div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer group hover:opacity-80 transition-opacity" 
+        className="absolute bottom-32 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 cursor-pointer group hover:opacity-80 transition-opacity" 
         onClick={() => {
           // Finde die zweite Section (Logline-Sektion) - das erste <section> Element
           const sections = document.querySelectorAll('section')
