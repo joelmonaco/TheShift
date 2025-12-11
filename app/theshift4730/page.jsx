@@ -1240,6 +1240,33 @@ export default function TheShiftPage() {
 
       {/* Fünfter Abschnitt - The Mystery of The Shift */}
       <section className="relative min-h-screen bg-black overflow-hidden">
+        {/* Video Hintergrund - Mobile: volle Breite, Desktop: rechte Hälfte */}
+        <div 
+          ref={container5Ref}
+          className={`absolute top-0 left-0 w-full md:w-1/2 md:left-1/2 h-full z-0 ${shouldFlicker5 ? 'animate-flicker-start' : ''}`}
+        >
+          <video
+            ref={video5Ref}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+            style={{
+              opacity: isLastHalfSecond5 ? 0 : 1,
+              transition: 'opacity 0.1s ease-out',
+            }}
+          >
+            <source src="/Video_5.mov" type="video/quicktime" />
+            <source src="/Video_5.mov" type="video/mp4" />
+            Dein Browser unterstützt das Video-Tag nicht.
+          </video>
+        </div>
+
+        {/* Dunkler transparenter Layer - nur Mobile */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10 md:hidden"></div>
+
         {/* Gradient Verlauf zu schwarz oben */}
         <div 
           className="absolute top-0 left-0 w-full h-32 pointer-events-none z-15"
@@ -1256,81 +1283,56 @@ export default function TheShiftPage() {
           }}
         ></div>
 
-        <div className="flex h-screen relative">
-          {/* Linke Hälfte - Text */}
+        {/* Content - Mobile: zentriert, Desktop: links */}
+        <div className="relative z-20 min-h-screen flex items-center justify-center md:justify-start px-4 py-24 md:py-0" style={{ paddingTop: '25vh' }}>
           <div 
             ref={mysteryTextRef}
-            className="relative w-1/2 h-full flex flex-col justify-center text-left" 
+            className="max-w-4xl mx-auto text-center md:text-left md:max-w-2xl md:mx-0 md:absolute md:left-0 md:top-0 md:h-full md:flex md:flex-col md:justify-center md:px-0" 
             style={{ 
-              paddingLeft: '6rem', 
-              paddingRight: '2rem',
+              paddingLeft: '0',
+              paddingRight: '0',
             }}
           >
-            <h2 
-              className="text-white mb-8 animate-uneven-pulse text-left"
-              style={{
-                fontFamily: 'var(--font-macbeth)',
-                fontSize: 'clamp(2rem, 5vw, 4rem)',
-                fontWeight: 400,
-                letterSpacing: '-0.02em',
-              }}
-            >
-              THE MYSTERY<br />OF THE SHIFT
-            </h2>
-            
-            <div className="max-w-2xl">
-              <p 
-                className="text-white text-base md:text-lg leading-relaxed"
+            <div className="md:pl-24 md:pr-8">
+              <h2 
+                className="text-white mb-8 animate-uneven-pulse"
                 style={{
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  fontFamily: 'var(--font-macbeth)',
+                  fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                   fontWeight: 400,
-                  lineHeight: '1.8',
+                  letterSpacing: '-0.02em',
                 }}
               >
-                The Shift is a supernatural, distorted reflection of reality—a <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>parallel dimension</span> where a person&apos;s deepest fears and hidden traumas physically manifest. It cannot be entered by choice; it pulls people in when their inner world begins to collapse.
-                <br /><br />
-                Fueled by raw emotion, The Shift grows stronger with fear and pain, twisting memories and playing with its victims like a predator. Though it feels like a nightmare, everything that happens inside it has real and often devastating consequences in the real world.
-              </p>
+                THE MYSTERY<br />OF THE SHIFT
+              </h2>
+              
+              <div className="max-w-2xl mx-auto md:mx-0">
+                <p 
+                  className="text-white text-lg md:text-lg leading-relaxed"
+                  style={{
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    fontWeight: 400,
+                    lineHeight: '1.8',
+                  }}
+                >
+                  The Shift is a supernatural, distorted reflection of reality—a <span style={{ fontFamily: 'var(--font-playfair-display), serif', fontStyle: 'italic', fontWeight: 700 }}>parallel dimension</span> where a person&apos;s deepest fears and hidden traumas physically manifest. It cannot be entered by choice; it pulls people in when their inner world begins to collapse.
+                  <br /><br />
+                  Fueled by raw emotion, The Shift grows stronger with fear and pain, twisting memories and playing with its victims like a predator. Though it feels like a nightmare, everything that happens inside it has real and often devastating consequences in the real world.
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* Rechte Hälfte - Video */}
-          <div className="relative w-1/2 h-full overflow-hidden">
-            {/* Video Hintergrund mit Flackern */}
-            <div 
-              ref={container5Ref}
-              className={`absolute top-0 left-0 w-full h-full z-0 ${shouldFlicker5 ? 'animate-flicker-start' : ''}`}
-            >
-              <video
-                ref={video5Ref}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover"
-                style={{
-                  opacity: isLastHalfSecond5 ? 0 : 1,
-                  transition: 'opacity 0.1s ease-out',
-                }}
-              >
-                <source src="/Video_5.mov" type="video/quicktime" />
-                <source src="/Video_5.mov" type="video/mp4" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-            </div>
-            
-            {/* Gradient Verlauf zu schwarz links (nur am linken Rand) */}
-            <div 
-              className="absolute top-0 left-0 pointer-events-none z-10"
-              style={{
-                width: '30%',
-                height: '100%',
-                background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
-              }}
-            ></div>
           </div>
         </div>
+
+        {/* Desktop: Gradient Verlauf zu schwarz links (nur am linken Rand) */}
+        <div 
+          className="hidden md:block absolute top-0 left-1/2 pointer-events-none z-10"
+          style={{
+            width: '30%',
+            height: '100%',
+            background: 'linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        ></div>
       </section>
 
       {/* Sechster Abschnitt - Visual Concept */}
