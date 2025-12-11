@@ -1473,8 +1473,8 @@ export default function TheShiftPage() {
               <div 
                 className="absolute top-0 left-0 w-full" 
                 style={{ 
-                  height: isMobile ? '70vh' : '120vh', 
-                  transform: isMobile ? 'translateY(20vh)' : 'translateY(75vh)', 
+                  height: isMobile ? '70vh' : (isTablet ? '80vh' : '120vh'), 
+                  transform: isMobile ? 'translateY(20vh)' : (isTablet ? 'translateY(30vh)' : 'translateY(75vh)'), 
                   zIndex: 10 
                 }}
               >
@@ -1508,12 +1508,13 @@ export default function TheShiftPage() {
                 />
                 {/* Vorderes Blatt */}
                 <div 
-                  className="relative bg-white p-12 shadow-2xl"
+                  className="relative bg-white shadow-2xl"
                   style={{
                     zIndex: 3,
                     height: '100%',
                     transform: 'rotate(3deg)',
                     boxShadow: '0 15px 50px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(0, 0, 0, 0.15)',
+                    padding: isMobile ? '1.5rem' : (isTablet ? '2rem' : '3rem'),
                   }}
                 >
                   <div className="max-w-4xl mx-auto">
@@ -1522,15 +1523,15 @@ export default function TheShiftPage() {
                       className="typewriter-content"
                       style={{
                         fontFamily: 'var(--font-courier-prime), monospace',
-                        fontSize: isMobile ? '0.5rem' : '0.9rem',
+                        fontSize: isMobile ? '0.5rem' : (isTablet ? '0.6rem' : '0.9rem'),
                         lineHeight: '1.8',
                         letterSpacing: '0.02em',
                       }}
                     >
                       <TextType 
-                        key={isMobile ? 'mobile' : 'desktop'}
+                        key={isMobile ? 'mobile' : (isTablet ? 'tablet' : 'desktop')}
                         as="div"
-                        text={[isMobile ? `THE SHIFT
+                        text={[(isMobile || isTablet) ? `THE SHIFT
 
 Written by
 
