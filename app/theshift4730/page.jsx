@@ -1595,16 +1595,16 @@ MORE`]}
               priority
             />
           </div>
+          {/* Schwarzer Gradient am unteren Rand */}
+          <div 
+            className="absolute bottom-0 left-0 w-full pointer-events-none"
+            style={{
+              height: '50%',
+              background: 'linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 100%)',
+              zIndex: 1,
+            }}
+          />
         </div>
-        {/* Schwarzer Gradient am unteren Rand - über dem Bild (nur Mobile) - außerhalb des inneren Containers */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 pointer-events-none md:hidden"
-          style={{
-            height: '50%',
-            background: 'linear-gradient(to top, #000000 0%, #000000 20%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 70%, rgba(0, 0, 0, 0.1) 90%, transparent 100%)',
-            zIndex: 15,
-          }}
-        />
       </section>
 
       {/* Zehnter Abschnitt - Development Status (über dem Bild) */}
