@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 import Image from 'next/image'
 import TextType from '@/components/TextType'
+import FuzzyText from '@/components/FuzzyText'
 
 export default function TheShiftPage() {
   const videoRef = useRef(null)
@@ -46,6 +47,7 @@ export default function TheShiftPage() {
   const [isTablet, setIsTablet] = useState(false)
   const [showCodeLayer, setShowCodeLayer] = useState(true)
   const [codeInput, setCodeInput] = useState(['', '', '', ''])
+  const [codeError, setCodeError] = useState(false)
   const codeInputRef0 = useRef(null)
   const codeInputRef1 = useRef(null)
   const codeInputRef2 = useRef(null)
@@ -537,6 +539,12 @@ export default function TheShiftPage() {
     const codeString = codeInput.join('')
     if (codeString === '4730') {
       setShowCodeLayer(false)
+    } else {
+      // Falscher Code: Fehlerzustand setzen und nach Animation zurücksetzen
+      setCodeError(true)
+      setTimeout(() => {
+        setCodeError(false)
+      }, 600) // Animation dauert ~600ms
     }
   }
 
@@ -550,11 +558,6 @@ export default function TheShiftPage() {
     // Automatisch zum nächsten Feld wechseln, wenn eine Ziffer eingegeben wurde
     if (digit && index < 3) {
       codeInputRefs[index + 1].current?.focus()
-    }
-
-    // Wenn alle Felder ausgefüllt sind, automatisch prüfen
-    if (newCode.every(d => d !== '') && newCode.join('') === '4730') {
-      setShowCodeLayer(false)
     }
   }
 
@@ -588,6 +591,21 @@ export default function TheShiftPage() {
       {showCodeLayer && (
         <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
           <div className="flex flex-col items-center gap-6 px-4">
+            {/* Factory Productions Text */}
+            <div className="mb-2 flex justify-center">
+              <FuzzyText
+                baseIntensity={0.2}
+                hoverIntensity={0.5}
+                enableHover={true}
+                fontSize="clamp(1.75rem, 5vw, 3.5rem)"
+                fontWeight={400}
+                fontFamily="var(--font-playfair-display), serif"
+                color="#fff"
+              >
+                Factory Productions
+              </FuzzyText>
+            </div>
+            
             {/* Code Input - Vier einzelne Felder */}
             <div className="flex items-center gap-3 md:gap-4">
               {[0, 1, 2, 3].map((index) => (
@@ -601,31 +619,44 @@ export default function TheShiftPage() {
                   onKeyDown={(e) => handleCodeKeyDown(index, e)}
                   onPaste={handleCodePaste}
                   maxLength={1}
-                  className="bg-transparent border-2 border-white text-white text-center text-4xl md:text-6xl font-mono w-16 md:w-20 h-20 md:h-24 focus:outline-none focus:border-gray-400 transition-colors"
+                  className={`bg-transparent border-2 text-white text-center text-4xl md:text-6xl w-16 md:w-20 h-20 md:h-24 focus:outline-none transition-all duration-300 ${
+                    codeError 
+                      ? 'border-red-500 animate-shake' 
+                      : 'border-white focus:border-gray-400'
+                  }`}
                   style={{
-                    fontFamily: 'var(--font-courier-prime), monospace',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
                   }}
                   autoFocus={index === 0}
                 />
               ))}
             </div>
             
-            {/* Enter Button */}
+            {/* Enter Button - immer gerendert, aber unsichtbar wenn nicht alle Felder ausgefüllt */}
             <button
               onClick={handleCodeSubmit}
-              disabled={codeInput.some(d => d === '')}
               className={`px-8 py-3 text-base font-medium transition-all duration-200 rounded-full flex items-center gap-3 ${
                 codeInput.every(d => d !== '')
-                  ? 'bg-white text-black hover:bg-gray-100 cursor-pointer'
-                  : 'bg-gray-800 text-gray-500 cursor-not-allowed'
+                  ? 'bg-white text-black hover:bg-gray-100 cursor-pointer opacity-100'
+                  : 'opacity-0 pointer-events-none'
               }`}
               style={{
-                fontFamily: 'var(--font-playfair-display), serif',
-                fontStyle: 'italic',
-                fontWeight: 900,
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                minHeight: '48px',
               }}
             >
-              Enter the shift
+              Enter <span style={{ fontWeight: 700 }}>The Shift</span>
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                className="ml-1"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>

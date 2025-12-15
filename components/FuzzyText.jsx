@@ -176,9 +176,7 @@ const FuzzyText = ({
 
   // Add style to ensure canvas is visible and properly sized
   // Only allow pointer events on the canvas itself for hover, but don't block other elements
-  return <canvas ref={canvasRef} style={{ display: 'block', maxWidth: '100%', height: 'auto', pointerEvents: 'none', position: 'relative', zIndex: 1 }} />
-
-  return <canvas ref={canvasRef} />
+  return <canvas ref={canvasRef} style={{ display: 'block', maxWidth: '100%', height: 'auto', pointerEvents: 'auto', position: 'relative', zIndex: 1 }} />
 }
 
 export default FuzzyText

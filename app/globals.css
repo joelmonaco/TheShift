@@ -19,6 +19,7 @@
   --animate-pulse-enhanced: pulse-enhanced 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-green-pulse: green-pulse 2s infinite;
   --animate-shine-interval: shineInterval 4s ease-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
 
   /* Basis Radius System */
   --radius-px-6: 6px;       /* Error-Boxen */  
