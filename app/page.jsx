@@ -44,6 +44,13 @@ export default function TheShiftPage() {
   const [isLandscape, setIsLandscape] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
+  const [showCodeLayer, setShowCodeLayer] = useState(true)
+  const [codeInput, setCodeInput] = useState(['', '', '', ''])
+  const codeInputRef0 = useRef(null)
+  const codeInputRef1 = useRef(null)
+  const codeInputRef2 = useRef(null)
+  const codeInputRef3 = useRef(null)
+  const codeInputRefs = [codeInputRef0, codeInputRef1, codeInputRef2, codeInputRef3]
 
   useEffect(() => {
     const video = videoRef.current
@@ -392,6 +399,27 @@ export default function TheShiftPage() {
     }
   }, [])
 
+  // Videos im Hintergrund laden, auch wenn Code-Layer sichtbar ist
+  useEffect(() => {
+    // Alle Video-Refs sammeln und laden
+    const videos = [
+      videoRef.current,
+      video2Ref.current,
+      video3Ref.current,
+      video4Ref.current,
+      video5Ref.current,
+      video6Ref.current,
+      introVideoRef.current,
+    ].filter(Boolean)
+
+    videos.forEach((video) => {
+      if (video && video.readyState < 2) {
+        // Video noch nicht geladen, also laden
+        video.load()
+      }
+    })
+  }, [])
+
   // Handler für Watch Teaser Button
   const handleWatchTeaser = () => {
     setIsFading(true)
@@ -504,8 +532,105 @@ export default function TheShiftPage() {
     }
   }, [showVideoModal])
 
+  // Handler für Code-Eingabe
+  const handleCodeSubmit = () => {
+    const codeString = codeInput.join('')
+    if (codeString === '4730') {
+      setShowCodeLayer(false)
+    }
+  }
+
+  const handleCodeChange = (index, value) => {
+    // Nur Zahlen erlauben
+    const digit = value.replace(/\D/g, '').slice(0, 1)
+    const newCode = [...codeInput]
+    newCode[index] = digit
+    setCodeInput(newCode)
+
+    // Automatisch zum nächsten Feld wechseln, wenn eine Ziffer eingegeben wurde
+    if (digit && index < 3) {
+      codeInputRefs[index + 1].current?.focus()
+    }
+
+    // Wenn alle Felder ausgefüllt sind, automatisch prüfen
+    if (newCode.every(d => d !== '') && newCode.join('') === '4730') {
+      setShowCodeLayer(false)
+    }
+  }
+
+  const handleCodeKeyDown = (index, e) => {
+    // Backspace: zum vorherigen Feld wechseln, wenn aktuelles Feld leer ist
+    if (e.key === 'Backspace' && !codeInput[index] && index > 0) {
+      codeInputRefs[index - 1].current?.focus()
+    }
+    // Enter: Code prüfen
+    if (e.key === 'Enter') {
+      handleCodeSubmit()
+    }
+  }
+
+  const handleCodePaste = (e) => {
+    e.preventDefault()
+    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4)
+    const newCode = ['', '', '', '']
+    for (let i = 0; i < pastedData.length && i < 4; i++) {
+      newCode[i] = pastedData[i]
+    }
+    setCodeInput(newCode)
+    // Fokus auf letztes ausgefülltes Feld oder erstes leeres Feld
+    const nextIndex = Math.min(pastedData.length, 3)
+    codeInputRefs[nextIndex].current?.focus()
+  }
+
   return (
     <div className="bg-black">
+      {/* Code Layer Overlay */}
+      {showCodeLayer && (
+        <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
+          <div className="flex flex-col items-center gap-6 px-4">
+            {/* Code Input - Vier einzelne Felder */}
+            <div className="flex items-center gap-3 md:gap-4">
+              {[0, 1, 2, 3].map((index) => (
+                <input
+                  key={index}
+                  ref={codeInputRefs[index]}
+                  type="text"
+                  inputMode="numeric"
+                  value={codeInput[index]}
+                  onChange={(e) => handleCodeChange(index, e.target.value)}
+                  onKeyDown={(e) => handleCodeKeyDown(index, e)}
+                  onPaste={handleCodePaste}
+                  maxLength={1}
+                  className="bg-transparent border-2 border-white text-white text-center text-4xl md:text-6xl font-mono w-16 md:w-20 h-20 md:h-24 focus:outline-none focus:border-gray-400 transition-colors"
+                  style={{
+                    fontFamily: 'var(--font-courier-prime), monospace',
+                  }}
+                  autoFocus={index === 0}
+                />
+              ))}
+            </div>
+            
+            {/* Enter Button */}
+            <button
+              onClick={handleCodeSubmit}
+              disabled={codeInput.some(d => d === '')}
+              className={`px-8 py-3 text-base font-medium transition-all duration-200 rounded-full flex items-center gap-3 ${
+                codeInput.every(d => d !== '')
+                  ? 'bg-white text-black hover:bg-gray-100 cursor-pointer'
+                  : 'bg-gray-800 text-gray-500 cursor-not-allowed'
+              }`}
+              style={{
+                fontFamily: 'var(--font-playfair-display), serif',
+                fontStyle: 'italic',
+                fontWeight: 900,
+              }}
+            >
+              Enter the shift
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className="min-h-screen bg-black relative overflow-hidden">
         {/* Video Container mit Gradients */}

@@ -66,3 +66,4 @@ echo "Optimization complete!"
 echo "Original files are in: public/"
 echo "Optimized files are in: public/optimized/"
 
+
