@@ -48,6 +48,23 @@ export default function TheShiftPage() {
   const [showCodeLayer, setShowCodeLayer] = useState(true)
   const [codeInput, setCodeInput] = useState(['', '', '', ''])
   const [codeError, setCodeError] = useState(false)
+  // Section visibility states - Section 1 (Hero) und Section 2 (Logline) sind immer sichtbar
+  const [section3Visible, setSection3Visible] = useState(false) // Synopsis
+  const [section4Visible, setSection4Visible] = useState(false) // Characters
+  const [section5Visible, setSection5Visible] = useState(false) // The Mystery
+  const [section6Visible, setSection6Visible] = useState(false) // Visual Concept
+  const [section7Visible, setSection7Visible] = useState(false) // Bilder Galerie
+  const [section8Visible, setSection8Visible] = useState(false) // Breites Bild
+  const [section9Visible, setSection9Visible] = useState(false) // Development Status
+  const [section10Visible, setSection10Visible] = useState(false) // Note of Authors
+  const [section11Visible, setSection11Visible] = useState(false) // Note of Authors (über Bild)
+  const [section12Visible, setSection12Visible] = useState(false) // Quote
+  const section2Ref = useRef(null)
+  const section3Ref = useRef(null)
+  const section4Ref = useRef(null)
+  const section5Ref = useRef(null)
+  const section6Ref = useRef(null)
+  const section7Ref = useRef(null)
   const codeInputRef0 = useRef(null)
   const codeInputRef1 = useRef(null)
   const codeInputRef2 = useRef(null)
@@ -401,25 +418,213 @@ export default function TheShiftPage() {
     }
   }, [])
 
-  // Videos im Hintergrund laden, auch wenn Code-Layer sichtbar ist
+  // Nur das erste Video (Hero) im Hintergrund laden
   useEffect(() => {
-    // Alle Video-Refs sammeln und laden
-    const videos = [
-      videoRef.current,
-      video2Ref.current,
-      video3Ref.current,
-      video4Ref.current,
-      video5Ref.current,
-      video6Ref.current,
-      introVideoRef.current,
-    ].filter(Boolean)
+    // Nur das erste Video laden, alle anderen werden lazy geladen
+    if (videoRef.current && videoRef.current.readyState < 2) {
+      videoRef.current.load()
+    }
+  }, [])
 
-    videos.forEach((video) => {
-      if (video && video.readyState < 2) {
-        // Video noch nicht geladen, also laden
-        video.load()
+  // Intersection Observer für Lazy Loading der Sections
+  useEffect(() => {
+    const observers = []
+
+    // Observer für Section 2 - aktiviert Section 3 wenn sichtbar
+    if (section2Ref.current) {
+      // Prüfe sofort, ob Section 2 bereits sichtbar ist
+      const rect = section2Ref.current.getBoundingClientRect()
+      const isVisible = rect.top < window.innerHeight + 200 && rect.bottom > -200
+      if (isVisible) {
+        setSection3Visible(true)
       }
-    })
+
+      const observer2 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection3Visible(true) // Section 3 wird aktiviert wenn Section 2 sichtbar ist
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer2.observe(section2Ref.current)
+      observers.push(observer2)
+    }
+
+    // Observer für Section 3 - aktiviert Section 4 wenn sichtbar
+    if (section3Ref.current && section3Visible) {
+      const observer3 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection4Visible(true)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer3.observe(section3Ref.current)
+      observers.push(observer3)
+    }
+
+    // Observer für Section 4 - aktiviert Section 5 wenn sichtbar
+    if (section4Ref.current && section4Visible) {
+      const observer4 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection5Visible(true)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer4.observe(section4Ref.current)
+      observers.push(observer4)
+    }
+
+    // Observer für Section 5 - aktiviert Section 6 wenn sichtbar
+    if (section5Ref.current && section5Visible) {
+      const observer5 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection6Visible(true)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer5.observe(section5Ref.current)
+      observers.push(observer5)
+    }
+
+    // Observer für Section 6 - aktiviert Section 7 wenn sichtbar
+    if (section6Ref.current && section6Visible) {
+      const observer6 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection7Visible(true)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer6.observe(section6Ref.current)
+      observers.push(observer6)
+    }
+
+    // Observer für Section 7 - aktiviert Section 8 wenn sichtbar
+    if (section7Ref.current && section7Visible) {
+      const observer7 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setSection8Visible(true)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '500px' }
+      )
+      observer7.observe(section7Ref.current)
+      observers.push(observer7)
+    }
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect())
+    }
+  }, [section3Visible, section4Visible, section5Visible, section6Visible, section7Visible])
+
+  // Videos laden, wenn ihre Section sichtbar wird
+  useEffect(() => {
+    // Section 2 Video (Intro.mp4) - lädt wenn Section 2 sichtbar ist (ist immer sichtbar)
+    if (section2Ref.current) {
+      const video2 = section2Ref.current.querySelector('video')
+      if (video2 && video2.readyState < 2) {
+        video2.load()
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (section3Visible && video2Ref.current) {
+      if (video2Ref.current.readyState < 2) {
+        video2Ref.current.load()
+      }
+    }
+  }, [section3Visible])
+
+  useEffect(() => {
+    if (section4Visible) {
+      // Video 3 und 4 laden (Characters Section)
+      if (video3Ref.current && video3Ref.current.readyState < 2) {
+        video3Ref.current.load()
+      }
+      if (video4Ref.current && video4Ref.current.readyState < 2) {
+        video4Ref.current.load()
+      }
+    }
+  }, [section4Visible])
+
+  useEffect(() => {
+    if (section5Visible && video5Ref.current) {
+      if (video5Ref.current.readyState < 2) {
+        video5Ref.current.load()
+      }
+    }
+  }, [section5Visible])
+
+  useEffect(() => {
+    if (section6Visible && video6Ref.current) {
+      if (video6Ref.current.readyState < 2) {
+        video6Ref.current.load()
+      }
+    }
+  }, [section6Visible])
+
+  useEffect(() => {
+    if (section7Visible) {
+      // Video 7 und 8 laden (Bilder Galerie)
+      const section7 = section7Ref.current
+      if (section7) {
+        const videos = section7.querySelectorAll('video')
+        videos.forEach((video) => {
+          if (video && video.readyState < 2) {
+            video.load()
+          }
+        })
+      }
+    }
+  }, [section7Visible])
+
+  // Video 9 (Quote Section) - Intersection Observer für Lazy Loading
+  useEffect(() => {
+    const video9 = document.querySelector('video source[src*="Video_9"]')?.closest('video')
+    if (!video9) return
+
+    const quoteSection = video9.closest('section')
+    if (!quoteSection) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && video9.readyState < 2) {
+            video9.load()
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '500px' }
+    )
+
+    observer.observe(quoteSection)
+
+    return () => {
+      observer.disconnect()
+    }
   }, [])
 
   // Handler für Watch Teaser Button
@@ -949,14 +1154,14 @@ export default function TheShiftPage() {
       </div>
 
       {/* Zweiter Abschnitt - Logline (weit unten) */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
+      <section ref={section2Ref} className="relative min-h-screen bg-black overflow-hidden">
         {/* Video Hintergrund */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
           <source src="/Intro.mp4" type="video/mp4" />
@@ -1039,7 +1244,8 @@ export default function TheShiftPage() {
       </section>
 
       {/* Dritter Abschnitt - Synopsis */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
+      {section3Visible && (
+      <section ref={section3Ref} className="relative min-h-screen bg-black overflow-hidden">
         {/* Video Hintergrund */}
         <div 
           ref={container2Ref}
@@ -1051,7 +1257,7 @@ export default function TheShiftPage() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             className="w-full h-full object-cover"
             style={{
               opacity: isLastHalfSecond2 ? 0 : 1,
@@ -1120,8 +1326,10 @@ export default function TheShiftPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* CHARACTERS Banner */}
+      {section4Visible && (
       <div className="relative w-full bg-black flex flex-col items-center justify-center" style={{ minHeight: '30vh', marginTop: '20vh' }}>
         <h2 
           className="text-white text-center animate-uneven-pulse"
@@ -1147,9 +1355,11 @@ export default function TheShiftPage() {
           THE KESSLER SISTERS
         </p>
       </div>
+      )}
 
       {/* Vierter Abschnitt - Characters */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
+      {section4Visible && (
+      <section ref={section4Ref} className="relative min-h-screen bg-black overflow-hidden">
         {/* Gradient Verlauf zu schwarz oben */}
         <div 
           className="absolute top-0 left-0 w-full h-32 pointer-events-none z-15"
@@ -1231,7 +1441,7 @@ export default function TheShiftPage() {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="none"
               className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 ${
                 isHoveringHannah ? 'grayscale-0' : 'grayscale'
               }`}
@@ -1336,7 +1546,7 @@ export default function TheShiftPage() {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="none"
               className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 ${
                 isHoveringEmilia ? 'grayscale-0' : 'grayscale'
               }`}
@@ -1398,8 +1608,10 @@ export default function TheShiftPage() {
         </div>
       </section>
 
+      )}
       {/* Fünfter Abschnitt - The Mystery of The Shift */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
+      {section5Visible && (
+      <section ref={section5Ref} className="relative min-h-screen bg-black overflow-hidden">
         {/* Video Hintergrund - Mobile: volle Breite, Desktop: rechte Hälfte */}
         <div 
           ref={container5Ref}
@@ -1411,7 +1623,7 @@ export default function TheShiftPage() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             className="w-full h-full object-cover"
             style={{
               opacity: isLastHalfSecond5 ? 0 : 1,
@@ -1495,8 +1707,10 @@ export default function TheShiftPage() {
         ></div>
       </section>
 
+      )}
       {/* Sechster Abschnitt - Visual Concept */}
-      <section className="relative min-h-screen bg-black overflow-hidden">
+      {section6Visible && (
+      <section ref={section6Ref} className="relative min-h-screen bg-black overflow-hidden">
         {/* Video Hintergrund mit Flackern */}
         <div 
           ref={container6Ref}
@@ -1508,7 +1722,7 @@ export default function TheShiftPage() {
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             className="w-full h-full object-cover"
             style={{
               opacity: isLastHalfSecond6 ? 0 : 1,
@@ -1569,8 +1783,10 @@ export default function TheShiftPage() {
         </div>
       </section>
 
+      )}
       {/* Siebter Abschnitt - Bilder Galerie */}
-      <section className="relative min-h-screen bg-black overflow-visible py-16 px-8">
+      {section7Visible && (
+      <section ref={section7Ref} className="relative min-h-screen bg-black overflow-visible py-16 px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
@@ -1585,6 +1801,7 @@ export default function TheShiftPage() {
                     src={`/Bilder/Bild_${num}.png`}
                     alt={`Bild ${num}`}
                     fill
+                    loading="lazy"
                     className="object-cover transition-all duration-500"
                     style={{
                       filter: hoveredImage === num ? 'grayscale(0%)' : 'grayscale(100%)',
@@ -1601,7 +1818,7 @@ export default function TheShiftPage() {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="none"
                 className="w-full h-full object-cover"
               >
                 <source src="/Video_7.mov" type="video/quicktime" />
@@ -1617,7 +1834,7 @@ export default function TheShiftPage() {
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="none"
                 className="w-full h-full object-cover"
               >
                 <source src="/Video_8.mov" type="video/quicktime" />
@@ -1737,6 +1954,7 @@ MORE`]}
           </div>
         </div>
       </section>
+      )}
 
       {/* Neunter Abschnitt - Breites Bild (unter den Blättern) */}
       <section className="relative w-full bg-black overflow-hidden" style={{ marginTop: isMobile ? '20vh' : (isTablet ? '30vh' : '80vh') }}>
@@ -1874,7 +2092,7 @@ MORE`]}
           loop
           muted
           playsInline
-          preload="auto"
+          preload="none"
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
           <source src="/Video_9.mov" type="video/quicktime" />
