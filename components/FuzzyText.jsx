@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const FuzzyText = ({
   children,
@@ -13,8 +13,23 @@ const FuzzyText = ({
   hoverIntensity = 0.5
 }) => {
   const canvasRef = useRef(null)
+  const [isSafari, setIsSafari] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Safari-Erkennung nach dem Mount, um Hydration-Mismatch zu vermeiden
+  useEffect(() => {
+    setIsMounted(true)
+    const userAgent = navigator.userAgent.toLowerCase()
+    // Safari-Erkennung: Safari hat "safari" aber nicht "chrome" im User-Agent
+    // Chrome hat "chrome" im User-Agent, auch wenn es "safari" enthält
+    const isSafariBrowser = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/chromium/.test(userAgent) && !/edg/.test(userAgent)
+    setIsSafari(isSafariBrowser)
+  }, [])
 
   useEffect(() => {
+    // Warte bis Component gemountet ist und prüfe Safari
+    if (!isMounted || isSafari) return
+
     let animationFrameId
     let isCancelled = false
     const canvas = canvasRef.current
@@ -74,11 +89,24 @@ const FuzzyText = ({
       const textBoundingWidth = Math.ceil(actualLeft + actualRight)
       const tightHeight = Math.ceil(actualAscent + actualDescent)
 
+      // Device pixel ratio für Retina-Displays und bessere Qualität
+      const dpr = window.devicePixelRatio || 1
+      // Für Safari verwenden wir einen höheren Multiplikator für bessere Qualität
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+      const scaleFactor = isSafari ? Math.max(dpr * 2, 3) : (dpr >= 2 ? dpr * 1.5 : dpr * 2)
+
       const extraWidthBuffer = 10
       const offscreenWidth = textBoundingWidth + extraWidthBuffer
 
-      offscreen.width = offscreenWidth
-      offscreen.height = tightHeight
+      // Offscreen Canvas mit höherer Auflösung
+      offscreen.width = offscreenWidth * scaleFactor
+      offscreen.height = tightHeight * scaleFactor
+      
+      // Image smoothing für bessere Qualität
+      offCtx.imageSmoothingEnabled = true
+      offCtx.imageSmoothingQuality = 'high'
+      
+      offCtx.scale(scaleFactor, scaleFactor)
 
       const xOffset = extraWidthBuffer / 2
       offCtx.font = `${fontWeight} ${fontSizeStr} ${resolvedFontFamily}`
@@ -88,8 +116,20 @@ const FuzzyText = ({
 
       const horizontalMargin = 50
       const verticalMargin = 0
-      canvas.width = offscreenWidth + horizontalMargin * 2
-      canvas.height = tightHeight + verticalMargin * 2
+      const displayWidth = offscreenWidth + horizontalMargin * 2
+      const displayHeight = tightHeight + verticalMargin * 2
+      
+      // Canvas mit höherer Auflösung
+      canvas.width = displayWidth * scaleFactor
+      canvas.height = displayHeight * scaleFactor
+      canvas.style.width = `${displayWidth}px`
+      canvas.style.height = `${displayHeight}px`
+      
+      // Image smoothing für bessere Qualität
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = 'high'
+      
+      ctx.scale(scaleFactor, scaleFactor)
       ctx.translate(horizontalMargin, verticalMargin)
 
       const interactiveLeft = horizontalMargin + xOffset
@@ -106,7 +146,13 @@ const FuzzyText = ({
         const intensity = isHovering ? hoverIntensity : baseIntensity
         for (let j = 0; j < tightHeight; j++) {
           const dx = Math.floor(intensity * (Math.random() - 0.5) * fuzzRange)
-          ctx.drawImage(offscreen, 0, j, offscreenWidth, 1, dx, j, offscreenWidth, 1)
+          // Zeichne von der hochauflösenden Offscreen-Canvas
+          // Da ctx bereits skaliert ist, müssen wir die Quellkoordinaten im skalierten Raum angeben
+          ctx.drawImage(
+            offscreen,
+            0, j * scaleFactor, offscreenWidth * scaleFactor, scaleFactor,
+            dx, j, offscreenWidth, 1
+          )
         }
         animationFrameId = window.requestAnimationFrame(run)
       }
@@ -172,11 +218,43 @@ const FuzzyText = ({
         canvas.cleanupFuzzyText()
       }
     }
-  }, [children, fontSize, fontWeight, fontFamily, color, enableHover, baseIntensity, hoverIntensity])
+  }, [children, fontSize, fontWeight, fontFamily, color, enableHover, baseIntensity, hoverIntensity, isMounted, isSafari])
 
-  // Add style to ensure canvas is visible and properly sized
-  // Only allow pointer events on the canvas itself for hover, but don't block other elements
-  return <canvas ref={canvasRef} style={{ display: 'block', maxWidth: '100%', height: 'auto', pointerEvents: 'auto', position: 'relative', zIndex: 1 }} />
+  // Während SSR und vor dem Mount: Canvas rendern (vermeidet Hydration-Mismatch)
+  // Nach dem Mount: In Safari normalen Text anzeigen, sonst Canvas-Effekt
+  if (isMounted && isSafari) {
+    return (
+      <span
+        style={{
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontFamily: fontFamily === 'inherit' ? 'inherit' : fontFamily,
+          color: color,
+          display: 'block',
+          textAlign: 'center',
+        }}
+      >
+        {children}
+      </span>
+    )
+  }
+
+  // In Chrome und anderen Browsern (oder während SSR): Canvas-Effekt
+  return (
+    <canvas 
+      ref={canvasRef} 
+      style={{ 
+        display: 'block', 
+        maxWidth: '100%', 
+        height: 'auto', 
+        pointerEvents: 'auto', 
+        position: 'relative', 
+        zIndex: 1,
+        imageRendering: 'auto',
+        WebkitImageRendering: 'auto'
+      }} 
+    />
+  )
 }
 
 export default FuzzyText

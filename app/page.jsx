@@ -731,12 +731,12 @@ export default function TheShiftPage() {
         <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
           <div className="flex flex-col items-center gap-6 px-4">
             {/* Factory Productions Text */}
-            <div className="mb-2 flex justify-center">
+            <div className="mb-2 flex justify-center factory-productions-text">
               <FuzzyText
                 baseIntensity={0.2}
                 hoverIntensity={0.5}
                 enableHover={true}
-                fontSize="clamp(1.75rem, 5vw, 3.5rem)"
+                fontSize="clamp(1.5rem, 4vw, 2.5rem)"
                 fontWeight={400}
                 fontFamily="var(--font-playfair-display), serif"
                 color="#fff"
