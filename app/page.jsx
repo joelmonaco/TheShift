@@ -8,7 +8,6 @@ import FuzzyText from '@/components/FuzzyText'
 export default function TheShiftPage() {
   const videoRef = useRef(null)
   const containerRef = useRef(null)
-  const introVideoRef = useRef(null)
   const video2Ref = useRef(null)
   const container2Ref = useRef(null)
   const video3Ref = useRef(null)
@@ -39,9 +38,6 @@ export default function TheShiftPage() {
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [showTeaserModal, setShowTeaserModal] = useState(false)
   const [isFading, setIsFading] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showControls, setShowControls] = useState(true)
-  const controlsTimeoutRef = useRef(null)
   const [isLandscape, setIsLandscape] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
@@ -652,27 +648,11 @@ export default function TheShiftPage() {
     setTimeout(() => {
       setIsFading(false)
       setShowVideoModal(true)
-      setShowControls(true) // Controls initial anzeigen
       // Scroll zur Logline-Sektion
       const loglineSection = document.querySelector('section')
       if (loglineSection) {
         loglineSection.scrollIntoView({ behavior: 'smooth' })
       }
-      // Video nach kurzer Verzögerung starten
-      setTimeout(() => {
-        if (introVideoRef.current) {
-          introVideoRef.current.volume = 1.0 // Volle Lautstärke
-          introVideoRef.current.muted = false // Sound aktivieren
-          introVideoRef.current.play().catch(err => {
-            console.error('Video play error:', err)
-          })
-          setIsPlaying(true)
-        }
-        // Nach 3 Sekunden Controls ausblenden
-        controlsTimeoutRef.current = setTimeout(() => {
-          setShowControls(false)
-        }, 3000)
-      }, 300)
     }, 1500) // Fade-to-Black Dauer
   }
 
@@ -682,17 +662,7 @@ export default function TheShiftPage() {
       e.preventDefault()
       e.stopPropagation()
     }
-    if (controlsTimeoutRef.current) {
-      clearTimeout(controlsTimeoutRef.current)
-    }
-    if (introVideoRef.current) {
-      introVideoRef.current.pause()
-      introVideoRef.current.currentTime = 0
-      introVideoRef.current.muted = true
-    }
-    setIsPlaying(false)
     setShowVideoModal(false)
-    setShowControls(true)
     // Zurück zur Logline-Sektion (Section 2) scrollen
     setTimeout(() => {
       const sections = document.querySelectorAll('section')
@@ -702,42 +672,6 @@ export default function TheShiftPage() {
     }, 100)
   }
 
-  // Handler für Play/Pause Toggle
-  const handlePlayPause = () => {
-    if (introVideoRef.current) {
-      if (isPlaying) {
-        introVideoRef.current.pause()
-        setIsPlaying(false)
-      } else {
-        introVideoRef.current.play()
-        setIsPlaying(true)
-      }
-    }
-  }
-
-  // Video Event Handler
-  useEffect(() => {
-    const video = introVideoRef.current
-    if (video) {
-      const handlePlay = () => setIsPlaying(true)
-      const handlePause = () => setIsPlaying(false)
-      const handleEnded = () => {
-        setIsPlaying(false)
-        // Video automatisch schließen und zur Section 2 scrollen
-        handleCloseVideo()
-      }
-
-      video.addEventListener('play', handlePlay)
-      video.addEventListener('pause', handlePause)
-      video.addEventListener('ended', handleEnded)
-
-      return () => {
-        video.removeEventListener('play', handlePlay)
-        video.removeEventListener('pause', handlePause)
-        video.removeEventListener('ended', handleEnded)
-      }
-    }
-  }, [showVideoModal])
 
   // Handler für Code-Eingabe
   const handleCodeSubmit = () => {
@@ -2227,28 +2161,11 @@ MORE`]}
         </div>
       )}
 
-      {/* Video Modal Fullscreen */}
+      {/* Video Modal Fullscreen - Vimeo Embed */}
       {showVideoModal && (
         <div 
           className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
-          onMouseMove={() => {
-            // Bei Mausbewegung Controls zeigen und Timer zurücksetzen
-            setShowControls(true)
-            if (controlsTimeoutRef.current) {
-              clearTimeout(controlsTimeoutRef.current)
-            }
-            // Nach 3 Sekunden Inaktivität ausblenden
-            controlsTimeoutRef.current = setTimeout(() => {
-              setShowControls(false)
-            }, 3000)
-          }}
-          onMouseLeave={() => {
-            // Beim Verlassen sofort ausblenden
-            setShowControls(false)
-            if (controlsTimeoutRef.current) {
-              clearTimeout(controlsTimeoutRef.current)
-            }
-          }}
+          onClick={handleCloseVideo}
         >
           {/* Close Button - Rechts oben (immer sichtbar) */}
           <button
@@ -2277,89 +2194,21 @@ MORE`]}
             </svg>
           </button>
 
-          {/* Hinweis zum Drehen auf Mobile (nur im Portrait-Modus) */}
-          {!isLandscape && isMobile && (
-            <div 
-              className="absolute inset-0 z-[103] bg-black/90 flex flex-col items-center justify-center md:hidden"
-              style={{
-                pointerEvents: 'auto',
-              }}
-            >
-              <div className="text-center px-8">
-                <svg 
-                  width="64" 
-                  height="64" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2"
-                  className="text-white mx-auto mb-4 animate-spin"
-                  style={{ animationDuration: '2s' }}
-                >
-                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                </svg>
-                <p 
-                  className="text-white text-lg font-medium mb-2"
-                  style={{
-                    fontFamily: 'var(--font-playfair-display), serif',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  Bitte drehen Sie Ihr Gerät
-                </p>
-                <p className="text-white text-sm opacity-80">
-                  Für die beste Wiedergabe im Querformat
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Video */}
-          <video
-            ref={introVideoRef}
-            className={`w-full h-full ${isLandscape || !isMobile ? 'object-contain' : 'object-cover'}`}
-            controls={false}
-            playsInline
-            volume={1.0}
+          {/* Vimeo Video Embed */}
+          <div 
+            className="relative w-full h-full"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '90vw', maxHeight: '90vh' }}
           >
-            <source src="/optimized/Intro.mp4" type="video/mp4" />
-            Dein Browser unterstützt das Video-Tag nicht.
-          </video>
-
-          {/* Play/Pause Button - Mitte (nur bei Mausbewegung sichtbar) */}
-          <div
-            className="absolute inset-0 z-[101] flex items-center justify-center pointer-events-none"
-          >
-            <button
-              onClick={handlePlayPause}
-              className={`text-white hover:text-gray-300 transition-all duration-200 hover:scale-110 ${
-                showControls ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{
-                width: '80px',
-                height: '80px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(0, 0, 0, 0.5)',
-                borderRadius: '50%',
-                backdropFilter: 'blur(10px)',
-                pointerEvents: showControls ? 'auto' : 'none',
-              }}
-            >
-            {isPlaying ? (
-              // Pause Icon
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="6" y="4" width="4" height="16" />
-                <rect x="14" y="4" width="4" height="16" />
-              </svg>
-            ) : (
-              // Play Icon
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            )}
-            </button>
+            <iframe
+              src="https://player.vimeo.com/video/1146926800?h=8b743457b3&autoplay=1"
+              className="w-full h-full"
+              style={{ aspectRatio: '16/9' }}
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title="The Shift - First Minutes"
+            ></iframe>
           </div>
         </div>
       )}
