@@ -887,8 +887,8 @@ export default function TheShiftPage() {
             transition: 'opacity 0.1s ease-out',
           }}
         >
-          <source src="/Video_1.mov" type="video/quicktime" />
-          <source src="/Video_1.mov" type="video/mp4" />
+          <source src="/optimized/Video_1.webm" type="video/webm" />
+          <source src="/optimized/Video_1.mp4" type="video/mp4" />
           Dein Browser unterstützt das Video-Tag nicht.
         </video>
         
@@ -1164,7 +1164,8 @@ export default function TheShiftPage() {
           preload="metadata"
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
-          <source src="/Intro.mp4" type="video/mp4" />
+          <source src="/optimized/Intro.webm" type="video/webm" />
+          <source src="/optimized/Intro.mp4" type="video/mp4" />
           Dein Browser unterstützt das Video-Tag nicht.
         </video>
 
@@ -1264,8 +1265,8 @@ export default function TheShiftPage() {
               transition: 'opacity 0.1s ease-out',
             }}
           >
-            <source src="/Video_2.mov" type="video/quicktime" />
-            <source src="/Video_2.mov" type="video/mp4" />
+            <source src="/optimized/Video_2.webm" type="video/webm" />
+            <source src="/optimized/Video_2.mp4" type="video/mp4" />
             Dein Browser unterstützt das Video-Tag nicht.
           </video>
         </div>
@@ -1449,8 +1450,8 @@ export default function TheShiftPage() {
                 filter: isHoveringHannah ? 'grayscale(0%)' : 'grayscale(100%)',
               }}
             >
-              <source src="/Video_3.mov" type="video/quicktime" />
-              <source src="/Video_3.mov" type="video/mp4" />
+              <source src="/optimized/Video_3.webm" type="video/webm" />
+              <source src="/optimized/Video_3.mp4" type="video/mp4" />
               Dein Browser unterstützt das Video-Tag nicht.
             </video>
 
@@ -1554,8 +1555,8 @@ export default function TheShiftPage() {
                 filter: isHoveringEmilia ? 'grayscale(0%)' : 'grayscale(100%)',
               }}
             >
-              <source src="/Video_4.mov" type="video/quicktime" />
-              <source src="/Video_4.mov" type="video/mp4" />
+              <source src="/optimized/Video_4.webm" type="video/webm" />
+              <source src="/optimized/Video_4.mp4" type="video/mp4" />
               Dein Browser unterstützt das Video-Tag nicht.
             </video>
 
@@ -1630,8 +1631,8 @@ export default function TheShiftPage() {
               transition: 'opacity 0.1s ease-out',
             }}
           >
-            <source src="/Video_5.mov" type="video/quicktime" />
-            <source src="/Video_5.mov" type="video/mp4" />
+            <source src="/optimized/Video_5.webm" type="video/webm" />
+            <source src="/optimized/Video_5.mp4" type="video/mp4" />
             Dein Browser unterstützt das Video-Tag nicht.
           </video>
         </div>
@@ -1730,8 +1731,8 @@ export default function TheShiftPage() {
               objectPosition: (isMobile || isTablet) ? 'right center' : 'center center',
             }}
           >
-            <source src="/Video_6.mov" type="video/quicktime" />
-            <source src="/Video_6.mov" type="video/mp4" />
+            <source src="/optimized/Video_6.webm" type="video/webm" />
+            <source src="/optimized/Video_6.mp4" type="video/mp4" />
             Dein Browser unterstützt das Video-Tag nicht.
           </video>
         </div>
@@ -1821,8 +1822,8 @@ export default function TheShiftPage() {
                 preload="none"
                 className="w-full h-full object-cover"
               >
-                <source src="/Video_7.mov" type="video/quicktime" />
-                <source src="/Video_7.mov" type="video/mp4" />
+                <source src="/optimized/Video_7.webm" type="video/webm" />
+                <source src="/optimized/Video_7.mp4" type="video/mp4" />
                 Dein Browser unterstützt das Video-Tag nicht.
               </video>
             </div>
@@ -1837,8 +1838,8 @@ export default function TheShiftPage() {
                 preload="none"
                 className="w-full h-full object-cover"
               >
-                <source src="/Video_8.mov" type="video/quicktime" />
-                <source src="/Video_8.mov" type="video/mp4" />
+                <source src="/optimized/Video_8.webm" type="video/webm" />
+                <source src="/optimized/Video_8.mp4" type="video/mp4" />
                 Dein Browser unterstützt das Video-Tag nicht.
               </video>
               
@@ -2095,8 +2096,8 @@ MORE`]}
           preload="none"
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
-          <source src="/Video_9.mov" type="video/quicktime" />
-          <source src="/Video_9.mov" type="video/mp4" />
+          <source src="/optimized/Video_9.webm" type="video/webm" />
+          <source src="/optimized/Video_9.mp4" type="video/mp4" />
           Dein Browser unterstützt das Video-Tag nicht.
         </video>
 
@@ -2321,7 +2322,7 @@ MORE`]}
             playsInline
             volume={1.0}
           >
-            <source src="/Intro.mp4" type="video/mp4" />
+            <source src="/optimized/Intro.mp4" type="video/mp4" />
             Dein Browser unterstützt das Video-Tag nicht.
           </video>
 

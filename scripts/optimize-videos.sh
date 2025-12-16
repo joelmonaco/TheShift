@@ -62,8 +62,28 @@ for video in public/*.mov public/*.mp4; do
     fi
 done
 
+# Check if Intro.webm exists, if not create it from Intro.mp4
+if [ -f "public/optimized/Intro.mp4" ] && [ ! -f "public/optimized/Intro.webm" ]; then
+    echo "Creating Intro.webm from Intro.mp4..."
+    ffmpeg -i "public/optimized/Intro.mp4" \
+        -c:v libvpx-vp9 \
+        -crf 30 \
+        -b:v 0 \
+        -c:a libopus \
+        -b:a 128k \
+        -y \
+        "public/optimized/Intro.webm" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        echo "✓ Created: public/optimized/Intro.webm"
+    else
+        echo "✗ Failed: public/optimized/Intro.webm"
+    fi
+fi
+
 echo "Optimization complete!"
 echo "Original files are in: public/"
 echo "Optimized files are in: public/optimized/"
+
 
 
